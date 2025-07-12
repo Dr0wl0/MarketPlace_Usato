@@ -30,7 +30,7 @@ public class LoginController {
         return userService.save(userDTO);
     }
 
-    @PatchMapping
+    @PatchMapping("/{uuid}")
     public UserDTO update(@PathVariable String uuid, @RequestBody UserDTO userDTO){
         return userService.update(uuid, userDTO);
     }
