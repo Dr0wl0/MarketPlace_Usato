@@ -27,7 +27,6 @@ public class LoginController {
 
     @PostMapping
     public UserDTO saveNewUser(@RequestBody UserDTO userDTO){
-        userDTO.setUuid(UUID.randomUUID().toString());
         return userService.save(userDTO);
     }
 

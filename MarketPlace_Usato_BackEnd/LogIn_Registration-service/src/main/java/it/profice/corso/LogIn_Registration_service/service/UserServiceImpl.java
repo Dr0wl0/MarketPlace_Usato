@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO save(UserDTO userDTO) {
+        userDTO.setUuid(UUID.randomUUID().toString());
         return modelToDto( userRepository.save( dtoToModel (userDTO) ) );
     }
 
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO modelToDto(User user){
         return UserDTO.builder()
+                .uuid(user.getUuid())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .nomeCognome(user.getNomeCognome())
@@ -58,6 +61,7 @@ public class UserServiceImpl implements UserService {
 
     public User dtoToModel (UserDTO userDto){
         return User.builder()
+                .uuid(userDto.getUuid())
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .nomeCognome(userDto.getNomeCognome())
