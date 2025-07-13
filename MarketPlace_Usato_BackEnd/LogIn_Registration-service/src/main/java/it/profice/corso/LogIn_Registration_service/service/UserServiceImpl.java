@@ -50,6 +50,11 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userToDelete.getId());
     }
 
+    @Override
+    public UserDTO findByUsername(String username) {
+        return modelToDto(userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new));
+    }
+
     public UserDTO modelToDto(User user){
         return UserDTO.builder()
                 .uuid(user.getUuid())

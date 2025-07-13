@@ -11,4 +11,5 @@ public interface UserService {
     List<UserDTO> findAll();
     UserDTO findByUuid(String uuid);
     void deleteByUuid(String uuid);
+    UserDTO findByUsername(String username);
 }

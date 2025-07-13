@@ -4,6 +4,7 @@ import it.profice.corso.LogIn_Registration_service.dto.UserDTO;
 import it.profice.corso.LogIn_Registration_service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,20 @@ public class LoginController {
         return userService.findByUuid(uuid);
     }
 
+    @PostMapping("/log")
+    public ResponseEntity<Object> login(@RequestBody UserDTO userDTO){
+      UserDTO userDtoOpt = userService.findByUsername(userDTO.getUsername());
+      if(userDtoOpt.getPassword().equals(userDTO.getPassword())){
+         return ResponseEntity.ok("Login riuscito per: " + userDtoOpt.getUsername());
+      } else return ResponseEntity.status(401).body("Password errata");
+    }
+
     @GetMapping("/users")
     public List<UserDTO> findAll(){
         return userService.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO saveNewUser(@RequestBody UserDTO userDTO){
         return userService.save(userDTO);
