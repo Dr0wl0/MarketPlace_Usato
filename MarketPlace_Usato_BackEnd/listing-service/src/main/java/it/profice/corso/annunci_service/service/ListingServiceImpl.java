@@ -24,7 +24,17 @@ public class ListingServiceImpl implements ListingService{
 
     @Override
     public ListingDTO findByUuid(String uuid) {
-        return modelToDto(listingRepository.findByUuid( uuid ).orElseThrow(ListingNotFoundException::new));
+
+        ListingDTO ret = modelToDto( listingRepository.findByUuid( uuid ).orElseThrow(ListingNotFoundException::new));
+        ret.setUserUuid(
+                webClientBuilderConfig.build().get()
+                        .uri("http://login-registration-service/api/v1/login/{uuid}/user", uuid)
+                        .retrieve()
+                        .bodyToMono(String.class)
+                        .block()
+        );
+
+        return ret;
     }
 
     @Override
@@ -66,6 +76,7 @@ public class ListingServiceImpl implements ListingService{
     public ListingDTO modelToDto(Listing listing){
         return ListingDTO.builder()
                 .uuid(listing.getUuid())
+                .userUuid(listing.getUserUuid())
                 .listingName(listing.getListingName())
                 .sellersName(listing.getSellersName())
                 .description(listing.getDescription())
@@ -78,6 +89,7 @@ public class ListingServiceImpl implements ListingService{
     public Listing dtoToModel (ListingDTO listingDto){
         return Listing.builder()
                 .uuid(listingDto.getUuid())
+                .userUuid(listingDto.getUserUuid())
                 .listingName(listingDto.getListingName())
                 .sellersName(listingDto.getSellersName())
                 .description(listingDto.getDescription())
