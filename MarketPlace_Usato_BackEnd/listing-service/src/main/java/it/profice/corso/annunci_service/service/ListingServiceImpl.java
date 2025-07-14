@@ -2,12 +2,14 @@ package it.profice.corso.annunci_service.service;
 
 import it.profice.corso.annunci_service.DTO.ListingDTO;
 import it.profice.corso.annunci_service.Enum.Category;
+import it.profice.corso.annunci_service.config.WebClientBuilderConfig;
+import it.profice.corso.annunci_service.exception.ListingNotFoundException;
 import it.profice.corso.annunci_service.model.Listing;
 import it.profice.corso.annunci_service.repository.ListingRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +20,12 @@ import java.util.UUID;
 public class ListingServiceImpl implements ListingService{
 
     private final ListingRepository listingRepository;
+    private final WebClient.Builder webClientBuilderConfig;
+
+    @Override
+    public ListingDTO findByUuid(String uuid) {
+        return modelToDto(listingRepository.findByUuid( uuid ).orElseThrow(ListingNotFoundException::new));
+    }
 
     @Override
     public List<ListingDTO> findAll() {
@@ -28,24 +36,31 @@ public class ListingServiceImpl implements ListingService{
     }
 
     @Override
-    public ListingDTO save(ListingDTO listing) {
+    public ListingDTO save( ListingDTO listing ) {
         listing.setUuid(UUID.randomUUID().toString());
         return modelToDto( listingRepository.save( dtoToModel( listing ) ) );
     }
 
     @Override
-    public ListingDTO findByName(String listingName) {
-        return null;
+    public List<ListingDTO> findByName(String listingName) {
+        return listingRepository.findByListingName( "%" + listingName + "%")
+                .stream()
+                .map(this::modelToDto)
+                .toList();
     }
 
     @Override
     public List<ListingDTO> findByCategory(Category category) {
-        return List.of();
+        return listingRepository.findByCategory( category )
+                .stream()
+                .map(this::modelToDto)
+                .toList();
     }
 
     @Override
-    public void deleteByUuid(ListingDTO listing, String sellersName) {
-
+    public void deleteByUuid(String uuid) {
+        Listing listingToDelete = listingRepository.findByUuid( uuid ).orElseThrow(ListingNotFoundException::new);
+        listingRepository.deleteById(listingToDelete.getId());
     }
 
     public ListingDTO modelToDto(Listing listing){

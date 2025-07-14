@@ -10,6 +10,7 @@ import lombok.*;
 public class ListingDTO {
 
     private String uuid;
+    private String userUuid;
     private String listingName;
     private String sellersName;
     private String description;

@@ -18,9 +18,12 @@ public class Listing {
     private Long id;
 
     private String uuid;
+    private String userUuid;
     private String listingName;
     private String sellersName;
     private String description;
+    @Enumerated( EnumType.STRING )
+    @Column(name = "category")
     private Category category;
     private Double price;
 

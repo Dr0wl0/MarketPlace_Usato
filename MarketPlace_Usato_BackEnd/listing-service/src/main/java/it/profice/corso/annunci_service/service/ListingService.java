@@ -7,10 +7,12 @@ import java.util.List;
 
 public interface ListingService {
 
+    ListingDTO findByUuid( String uuid );
     List<ListingDTO> findAll();
     ListingDTO save ( ListingDTO listing );
-    ListingDTO findByName ( String listingName );
+    List<ListingDTO> findByName ( String listingName );
     List<ListingDTO> findByCategory( Category category );
-    void deleteByUuid( ListingDTO listing, String sellersName);
+
+    void deleteByUuid( String uuid );
 
 }
