@@ -66,6 +66,7 @@ public class ListingServiceImpl implements ListingService{
     public ListingDTO modelToDto(Listing listing){
         return ListingDTO.builder()
                 .uuid(listing.getUuid())
+                .userUuid(listing.getUserUuid())
                 .listingName(listing.getListingName())
                 .sellersName(listing.getSellersName())
                 .description(listing.getDescription())
@@ -78,6 +79,7 @@ public class ListingServiceImpl implements ListingService{
     public Listing dtoToModel (ListingDTO listingDto){
         return Listing.builder()
                 .uuid(listingDto.getUuid())
+                .userUuid(listingDto.getUserUuid())
                 .listingName(listingDto.getListingName())
                 .sellersName(listingDto.getSellersName())
                 .description(listingDto.getDescription())
