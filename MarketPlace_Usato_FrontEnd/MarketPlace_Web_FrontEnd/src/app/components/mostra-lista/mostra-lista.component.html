@@ -1,0 +1,13 @@
+<h2>Lista degli oggetti</h2>
+
+<ul *ngIf="items.length > 0; else loading">
+  <li *ngFor="let item of items">
+    <strong>{{ item.name }}</strong> - Categoria: {{ getCategoryLabel(item.category) }}
+  </li>
+</ul>
+
+<ng-template #loading>
+  <p>Caricamento in corso...</p>
+</ng-template>
+
+
