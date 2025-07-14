@@ -1,6 +1,7 @@
 package it.profice.corso.LogIn_Registration_service.service;
 
 import it.profice.corso.LogIn_Registration_service.dto.UserDTO;
+import it.profice.corso.LogIn_Registration_service.exception.UserAlredyExistingException;
 import it.profice.corso.LogIn_Registration_service.exception.UserNotFoundException;
 import it.profice.corso.LogIn_Registration_service.model.User;
 import it.profice.corso.LogIn_Registration_service.repository.UserRepository;
@@ -18,8 +19,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO save(UserDTO userDTO) {
+        for(UserDTO userDTOf : userRepository.findAll().stream().map(this::modelToDto).toList()){
+            if(userDTOf.getUsername().equals(userDTO.getUsername())){
+                throw new UserAlredyExistingException();
+            }
+        }
         userDTO.setUuid(UUID.randomUUID().toString());
-        return modelToDto( userRepository.save( dtoToModel (userDTO) ) );
+        return modelToDto(userRepository.save(dtoToModel(userDTO)));
     }
 
     @Override
@@ -55,12 +61,29 @@ public class UserServiceImpl implements UserService {
         return modelToDto(userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new));
     }
 
+    @Override
+    public UserDTO log(UserDTO userDTO) {
+        if(!userDTO.getIsLogged()){
+            userDTO.setIsLogged(true);
+        }
+        return userDTO;
+    }
+
+    @Override
+    public UserDTO logOut(UserDTO userDTO) {
+        if(userDTO.getIsLogged()){
+            userDTO.setIsLogged(false);
+        }
+        return userDTO;
+    }
+
     public UserDTO modelToDto(User user){
         return UserDTO.builder()
                 .uuid(user.getUuid())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .nomeCognome(user.getNomeCognome())
+                .isLogged(user.getIsLogged())
                 .build();
     }
 
@@ -70,6 +93,7 @@ public class UserServiceImpl implements UserService {
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .nomeCognome(userDto.getNomeCognome())
+                .isLogged(userDto.getIsLogged())
                 .build();
     }
 
