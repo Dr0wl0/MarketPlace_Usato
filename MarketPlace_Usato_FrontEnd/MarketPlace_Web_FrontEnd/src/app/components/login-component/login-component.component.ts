@@ -14,13 +14,14 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
   username = '';
+  email = '';
   password = '';
   errorMessage = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    this.authService.login(this.username, this.password).subscribe({
+    this.authService.login(this.username, this.email, this.password).subscribe({
       next: (response:{uuid: string},) => {
         localStorage.setItem('userUuid', response.uuid);
         localStorage.setItem('userName', this.username)

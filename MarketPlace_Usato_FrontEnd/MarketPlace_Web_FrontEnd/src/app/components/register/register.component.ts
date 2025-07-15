@@ -25,7 +25,7 @@ export class RegisterComponent {
         this.router.navigate(['/login']); // Reindirizza al login dopo la registrazione
       },
       error: () => {
-        this.errorMessage = 'Registrazione fallita!';
+        this.errorMessage = 'Registrazione fallita!'; // TODO  - PRENDERE INFORMAZIONI DALLA RESPONSE
       }
     });
   }

@@ -19,11 +19,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO save(UserDTO userDTO) {
-        for(UserDTO userDTOf : userRepository.findAll().stream().map(this::modelToDto).toList()){
-            if(userDTOf.getUsername().equals(userDTO.getUsername())){
-                throw new UserAlredyExistingException();
-            }
+        if(userRepository.findByUsername( userDTO.getUsername() ).isPresent()){
+            throw new UserAlredyExistingException();
         }
+
         userDTO.setUuid(UUID.randomUUID().toString());
         return modelToDto(userRepository.save(dtoToModel(userDTO)));
     }

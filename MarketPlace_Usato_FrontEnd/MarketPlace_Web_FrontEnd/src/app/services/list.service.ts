@@ -17,5 +17,14 @@ export class ListService {
 
   addAnnuncio(annuncio: Annuncio): Observable<Annuncio> {
   return this.http.post<Annuncio>(this.apiUrl, annuncio);
-    }
+  }
+
+  updateFavouriteStatus(uuid: string, favourite: boolean): Observable<Annuncio> {
+    return this.http.put<Annuncio>(
+      this.apiUrl+`${uuid}/favourite`,
+      null,
+      {params: {favourite}}
+    )
+  }
+
 }

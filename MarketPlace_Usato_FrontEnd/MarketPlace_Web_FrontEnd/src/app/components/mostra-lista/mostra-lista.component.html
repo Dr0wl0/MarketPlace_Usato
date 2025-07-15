@@ -25,7 +25,8 @@
   <div *ngIf="filteredAnnunci.length > 0; else noAnnunci">
     <ul>
       <li *ngFor="let annuncio of filteredAnnunci">
-        <strong>{{ annuncio.name }}</strong> -
+        <strong>{{ annuncio.listingName
+     }}</strong> -
         Categoria: {{ getCategoryLabel(annuncio.category) }}<br />
         Descrizione: {{ annuncio.description }}<br />
         Prezzo: €{{ annuncio.price }}<br />
@@ -47,9 +48,9 @@
 <div *ngIf="currentView === 'form'">
   <h2>Nuovo Annuncio</h2>
   <br /><br />
-
-  <label for="annuncio-name">Nome:</label>
-  <input id="annuncio-name" [(ngModel)]="newAnnuncio.name" placeholder="Inserisci nome annuncio" />
+  
+  <label for="annuncio.listingName">Nome:</label>
+  <input id="annuncio.listingName" [(ngModel)]="newAnnuncio.listingName" placeholder="Inserisci nome annuncio" />
 
   <label for="annuncio-description">Descrizione:</label>
   <input id="annuncio-description" [(ngModel)]="newAnnuncio.description" placeholder="Inserisci descrizione" />

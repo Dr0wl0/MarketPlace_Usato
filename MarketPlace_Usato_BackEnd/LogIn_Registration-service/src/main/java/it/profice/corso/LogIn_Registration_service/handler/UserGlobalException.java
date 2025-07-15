@@ -25,7 +25,7 @@ public class UserGlobalException {
     }
     @ExceptionHandler
     public ResponseEntity<Map<String,Object>> hanlerUserAlredyExistingException( UserAlredyExistingException e ){
-        return new ResponseEntity<>(getRet("409", "Utente già esistente"), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(getRet("400", "Utente già esistente"), HttpStatus.BAD_REQUEST);
     }
 
     private Map<String, Object> getRet(String errorCode, String errorMessage) {

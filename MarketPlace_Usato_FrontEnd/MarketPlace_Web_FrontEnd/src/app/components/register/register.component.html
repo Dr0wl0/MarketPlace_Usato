@@ -1,20 +1,20 @@
 <div class="register-box">
   <h2>Registrati</h2>
   
-  <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
     <div>
       <label>Username:</label>
-      <input type="text" [(ngModel)]="username" name="username" required>
+      <input type="text" name="username" [(ngModel)]="username" required>
     </div>
 
     <div>
       <label>Email:</label>
-      <input type="email" [(ngModel)]="email" name="email" required>
+      <input type="email" name="email" [(ngModel)]="email" required>
     </div>
 
     <div>
       <label>Password:</label>
-      <input type="password" [(ngModel)]="password" name="password" required>
+      <input type="password" name="password" [(ngModel)]="password" required>
     </div>
 
     <button type="submit">Registrati</button>

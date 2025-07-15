@@ -4,33 +4,34 @@ import { ListService } from '../../services/list.service';
 import { Annuncio } from '../../models/annuncio';
 import { Category } from '../../models/Category';
 import { RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-post-list',
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './mostra-lista.component.html',
 })
-
 export class MostraListaComponent implements OnInit {
   annunci: Annuncio[] = [];
-
   currentView: 'list' | 'form' = 'list';
 
   newAnnuncio: Partial<Annuncio> = {
-    name: '',
-    category: Category.FOOD
+    listingName: '',
+    description: '',
+    price: 0,
+    category: Category.CARS
   };
 
   categoryLabels: { [key in Category]: string } = {
-    [Category.FOOD]: 'Cibo',
+    [Category.CARS]: 'Macchine',
     [Category.ELECTRONICS]: 'Elettronica',
-    [Category.CLOTHING]: 'Abbigliamento',
+    [Category.MOTORBIKES]: 'Moto',
+    [Category.SPORTS]: 'Sports',
   };
 
   getCategoryLabel(category: Category): string {
-  return this.categoryLabels[category] ?? category;
+    return this.categoryLabels[category] ?? category;
   }
 
   selectedCategory: Category | null = null;
@@ -45,22 +46,24 @@ export class MostraListaComponent implements OnInit {
     );
   }
 
+
   constructor(private listService: ListService) {}
 
   ngOnInit(): void {
     this.listService.getAnnunci().subscribe((data) => {
-      this.annunci = data;
+      console.log('Dati ricevuti:', data);
+      this.annunci = data || [];
     });
   }
 
   loadAnnuncio(): void {
     this.listService.getAnnunci().subscribe((data) => {
-      this.annunci = data;
+      this.annunci = data || [];
     });
   }
 
   publishAnnuncio(): void {
-    if (!this.newAnnuncio.name || !this.newAnnuncio.category) return;
+    if (!this.newAnnuncio.listingName || !this.newAnnuncio.category) return;
 
     const userUuid = localStorage.getItem('userUuid');
 
@@ -70,19 +73,18 @@ export class MostraListaComponent implements OnInit {
     }
 
     const annuncioToSend: Annuncio = {
-      uuid: '',
-      userUuid: this.userUuid,
       listingName: this.newAnnuncio.listingName,
       category: this.newAnnuncio.category as Category,
-      sellersName: '',
-      description: '',
-      price: 0,
-      favourite: false
+      description: '',  //DA COMPLETARE     
+      price: 0, //DA COMPLETARE */
+      favourite: false,
+      uuid: '',
+      userUuid: userUuid
     };
 
     this.listService.addAnnuncio(annuncioToSend).subscribe(() => {
-      this.newAnnuncio = { name: '', category: Category.FOOD };
-      this.loadAnnuncio();
+      this.newAnnuncio = { listingName: '', category: Category.CARS,/* description: '', price: 0,*/ userUuid: userUuid }; 
+      this.loadAnnuncio(); 
       this.currentView = 'list';
     });
   }
@@ -93,10 +95,13 @@ export class MostraListaComponent implements OnInit {
     next: (updatedAnnuncio) => {
       annuncio.favourite = updatedAnnuncio.favourite; // aggiorna localmente
     },
-    error: () => {
-      alert('Errore nel modificare il preferito');
-    }
-  });
-}
+      error: () => {
+        alert('Errore nel modificare il preferito');
+      }
+    });
+  }
+
+
+
 }
 

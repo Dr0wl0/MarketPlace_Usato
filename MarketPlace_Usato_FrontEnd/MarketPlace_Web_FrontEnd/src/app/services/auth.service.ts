@@ -11,14 +11,14 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   // Login (come prima)
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/log`, { username, password }, {
+  login(username: string, email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/log`, { username, email, password }, {
       withCredentials: true
     });
   }
 
   // Nuovo metodo register
-  register(nomeCognome: string,username: string, password: string) {
-    return this.http.post(`${this.apiUrl}/register`, { nomeCognome, username, password });
+  register(username: string, email: string, password: string) {
+    return this.http.post(`${this.apiUrl}/register`, { username, email, password });
   }
 }
