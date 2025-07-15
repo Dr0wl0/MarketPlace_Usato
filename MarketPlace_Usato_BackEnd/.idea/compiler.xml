@@ -28,6 +28,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="listing-service" />
+        <module name="favorite-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -36,6 +37,7 @@
       <module name="LogIn_Registration-service" options="-parameters" />
       <module name="api.gateway" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
+      <module name="favorite-service" options="-parameters" />
       <module name="listing-service" options="-parameters" />
     </option>
   </component>

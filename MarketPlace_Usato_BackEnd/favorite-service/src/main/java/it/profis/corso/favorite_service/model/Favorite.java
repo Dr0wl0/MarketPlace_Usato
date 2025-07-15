@@ -1,8 +1,8 @@
-package it.profice.corso.annunci_service.model;
-
+package it.profis.corso.favorite_service.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.stereotype.Service;
 
 @Entity
 @Getter
@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Listing {
+public class Favorite {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -21,8 +21,8 @@ public class Listing {
     private String listingName;
     private String sellersName;
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "category")
+    @Enumerated( EnumType.STRING )
+    @Column(name = "category")
     private Category category;
     private Double price;
 

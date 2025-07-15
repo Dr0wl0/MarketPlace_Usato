@@ -1,6 +1,6 @@
 package it.profice.corso.annunci_service.repository;
 
-import it.profice.corso.annunci_service.Enum.Category;
+import it.profice.corso.annunci_service.model.Category;
 import it.profice.corso.annunci_service.model.Listing;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +16,8 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     @Query(value = "SELECT * FROM Listing l WHERE LOWER(l.listing_name) LIKE LOWER( :name )", nativeQuery = true)
     List<Listing> findByListingName(@Param( value = "name") String listingName );
 
-    List<Listing> findByCategory( Category category );
+    @Query(value = "SELECT * FROM Listing l WHERE UPPER(l.category.category) = :categoryName", nativeQuery = true)
+    List<Listing> findByCategoryName( String categoryName );
 
     Optional<Listing> findByUuid(String uuid );
 
