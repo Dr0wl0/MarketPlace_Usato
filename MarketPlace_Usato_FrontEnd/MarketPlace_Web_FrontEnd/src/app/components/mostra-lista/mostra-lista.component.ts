@@ -83,7 +83,7 @@ export class MostraListaComponent implements OnInit {
     };
 
     this.listService.addAnnuncio(annuncioToSend).subscribe(() => {
-      this.newAnnuncio = { listingName: '', category: Category.CARS,/* description: '', price: 0,*/ userUuid: userUuid }; 
+      this.newAnnuncio = { listingName: '', category: Category.CARS,description: '', price: 0, userUuid: userUuid }; 
       this.loadAnnuncio(); 
       this.currentView = 'list';
     });
