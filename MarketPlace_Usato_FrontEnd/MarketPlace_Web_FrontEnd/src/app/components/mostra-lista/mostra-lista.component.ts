@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ListService } from '../../services/list.service';
 import { Annuncio } from '../../models/annuncio';
 import { Category } from '../../models/Category';
@@ -30,6 +30,17 @@ export class MostraListaComponent implements OnInit {
     [Category.MOTORBIKES]: 'Moto',
     [Category.SPORTS]: 'Sports',
   };
+
+  showScrollButton = false;
+
+@HostListener('window:scroll')
+onWindowScroll() {
+  this.showScrollButton = window.pageYOffset > 200;
+}
+
+scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
   getCategoryLabel(category: Category): string {
     return this.categoryLabels[category] ?? category;

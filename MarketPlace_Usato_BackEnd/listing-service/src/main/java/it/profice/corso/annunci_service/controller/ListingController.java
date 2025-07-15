@@ -49,5 +49,7 @@ public class ListingController {
     }
 
     @PutMapping("/{uuid}/favourite")
-    public ResponseEntity<ListingDTO> updateFavourite(@PathVariable String uuid)  {listingService.toggleFavourite(uuid);}
+    public ResponseEntity<ListingDTO> updateFavourite(@PathVariable String uuid)  {
+        return listingService.toggleFavourite(uuid);
+    }
 }
