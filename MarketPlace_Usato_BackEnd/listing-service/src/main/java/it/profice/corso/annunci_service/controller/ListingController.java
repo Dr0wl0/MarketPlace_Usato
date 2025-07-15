@@ -22,8 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/listings")
 public class ListingController {
 
-    @Autowired
-    private final ListingService listingService=null; //rimuovi il null se da problemi
+    private final ListingService listingService;
 
     @GetMapping
     public List<ListingDTO> findAll() { return listingService.findAll(); }
