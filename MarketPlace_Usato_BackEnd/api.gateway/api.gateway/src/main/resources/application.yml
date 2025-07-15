@@ -11,6 +11,10 @@ spring:
           uri: lb://login-registration-service
           predicates:
             - Path=/api/v1/login/**
+        - id: listing-service
+          uri: lb://listing-service
+          predicates:
+            - Path=/api/v1/listings/**
   server:
     webflux:
       globalcors:
