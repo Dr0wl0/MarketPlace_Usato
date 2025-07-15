@@ -1,13 +1,68 @@
-<h2>Lista degli oggetti</h2>
+<div class="view-toggle">
+  <button (click)="currentView = 'list'">Visualizza annunci</button>
+  <button (click)="currentView = 'form'">Nuovo annuncio</button>
+</div>
 
-<ul *ngIf="items.length > 0; else loading">
-  <li *ngFor="let item of items">
-    <strong>{{ item.name }}</strong> - Categoria: {{ getCategoryLabel(item.category) }}
-  </li>
-</ul>
+<hr />
 
-<ng-template #loading>
-  <p>Caricamento in corso...</p>
-</ng-template>
+<div class="container", *ngIf="currentView === 'list'">
+  <h2>Lista Annunci</h2>
 
+  <div class="filter">
+    <label for="categoryFilter">Filtra per categoria:</label>
+    <select id="categoryFilter" [(ngModel)]="selectedCategory">
+      <option [ngValue]="null">Tutte le categorie</option>
+      <option *ngFor="let cat of (categoryLabels | keyvalue)" [ngValue]="cat.key">
+        {{ cat.value }}
+      </option>
+    </select>
+  </div>
+
+  <div class="add-annuncio-form">
+    <h3>Nuovo Annuncio</h3>
+    
+    <label for="annuncio-name">Nome:</label>
+    <input id="annuncio-name" [(ngModel)]="newAnnuncio.name" placeholder="Inserisci nome annuncio" />
+
+    <label for="category-select">Categoria:</label>
+    <select id="category-select" [(ngModel)]="newAnnuncio.category">
+      <option *ngFor="let categoryKey of (categoryLabels | keyvalue)" [value]="categoryKey.key">
+        {{ categoryKey.value }}
+      </option>
+    </select>
+
+    <button (click)="publishAnnuncio()">Pubblica Annuncio</button>
+  </div>
+
+  <hr />
+
+  <div *ngIf="filteredAnnunci.length > 0; else noAnnunci">
+    <ul>
+      <li *ngFor="let annuncio of filteredAnnunci">
+        <strong>{{ annuncio.name }}</strong> - 
+        Categoria: {{ getCategoryLabel(annuncio.category) }}
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noAnnunci>
+    <p>Nessun annuncio disponibile per la categoria selezionata.</p>
+  </ng-template>
+</div>
+
+<div *ngIf="currentView === 'form'">
+  <h2>Nuovo Annuncio</h2>
+
+  <label for="annuncio-name">Nome:</label>
+  <input id="annuncio-name" [(ngModel)]="newAnnuncio.name" placeholder="Inserisci nome annuncio" />
+
+  <label for="category-select">Categoria:</label>
+  <select id="category-select" [(ngModel)]="newAnnuncio.category">
+    <option *ngFor="let categoryKey of (categoryLabels | keyvalue)" [value]="categoryKey.key">
+      {{ categoryKey.value }}
+    </option>
+  </select>
+
+  <button (click)="publishAnnuncio()">Pubblica Annuncio</button>
+</div>
 
