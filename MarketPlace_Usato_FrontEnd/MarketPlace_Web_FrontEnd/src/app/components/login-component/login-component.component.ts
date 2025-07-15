@@ -21,12 +21,12 @@ export class LoginComponent {
 
   onSubmit() {
     this.authService.login(this.username, this.password).subscribe({
-      next: () => {
-        // Login riuscito
-        this.router.navigate(['/home']); // Reindirizza alla home
+      next: (response:{uuid: string}) => {
+        localStorage.setItem('userUuid', response.uuid);
+
+        this.router.navigate(['/home']);
       },
       error: () => {
-        // Login fallito
         this.errorMessage = 'Username o password errati!';
       }
     });

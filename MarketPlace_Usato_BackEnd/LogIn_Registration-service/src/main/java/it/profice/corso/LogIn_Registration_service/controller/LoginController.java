@@ -22,11 +22,12 @@ public class LoginController {
     }
 
     @PostMapping("/log")
-    public ResponseEntity<Object> login(@RequestBody UserDTO userDTO){
+    public UserDTO login(@RequestBody UserDTO userDTO){
       UserDTO userDtoOpt = userService.findByUsername(userDTO.getUsername());
       if(userDtoOpt.getPassword().equals(userDTO.getPassword())){
-         return ResponseEntity.ok("Login riuscito per: " + userDtoOpt.getUsername());
-      } else return ResponseEntity.status(401).body("Password errata");
+          userService.log(userDtoOpt);
+      }
+      return userDtoOpt;
     }
 
     @GetMapping("/users")

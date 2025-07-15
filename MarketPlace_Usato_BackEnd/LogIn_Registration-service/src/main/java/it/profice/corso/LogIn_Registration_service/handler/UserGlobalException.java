@@ -1,5 +1,6 @@
 package it.profice.corso.LogIn_Registration_service.handler;
 
+import it.profice.corso.LogIn_Registration_service.exception.UserAlredyExistingException;
 import it.profice.corso.LogIn_Registration_service.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,12 @@ public class UserGlobalException {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handlerBookNotFoundException( UserNotFoundException e ){
+    public ResponseEntity<Map<String, Object>> handlerUserNotFoundException( UserNotFoundException e ){
         return new ResponseEntity<>(getRet("404", "Usernname o password errati!" ), HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler
+    public ResponseEntity<Map<String,Object>> hanlerUserAlredyExistingException( UserAlredyExistingException e ){
+        return new ResponseEntity<>(getRet("409", "Utente già esistente"), HttpStatus.CONFLICT);
     }
 
     private Map<String, Object> getRet(String errorCode, String errorMessage) {
