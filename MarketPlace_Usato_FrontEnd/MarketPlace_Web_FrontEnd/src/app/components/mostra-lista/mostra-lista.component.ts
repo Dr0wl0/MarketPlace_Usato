@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../../models/categoria';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-post-list',
   imports: [CommonModule, FormsModule],
@@ -28,7 +28,12 @@ export class MostraListaComponent implements OnInit {
 
   showScrollButton = false;
 
-  constructor(private listService: ListService, private http: HttpClient) {}
+  constructor(
+  private listService: ListService, 
+  private http: HttpClient,
+  private router: Router
+) {}
+
 
   @HostListener('window:scroll')
   onWindowScroll() {
@@ -40,9 +45,14 @@ export class MostraListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAnnuncio();
-    this.loadCategorie();
+  if (!localStorage.getItem('userUuid')) {
+    this.router.navigate(['/login']);
+    return;
   }
+  
+  this.loadAnnuncio();
+  this.loadCategorie();
+}
 
   loadAnnuncio(): void {
     this.listService.getAnnunci().subscribe((data) => {

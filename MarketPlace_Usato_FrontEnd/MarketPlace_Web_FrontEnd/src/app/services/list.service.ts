@@ -19,6 +19,10 @@ export class ListService {
   return this.http.post<Annuncio>(this.apiUrl, annuncio);
   }
 
+  getAnnunciByUser(userUuid: string): Observable<Annuncio[]> {
+  return this.http.get<Annuncio[]>(`${this.apiUrl}/user/${userUuid}`);
+}
+
   updateFavouriteStatus(uuid: string, favourite: boolean): Observable<Annuncio> {
     return this.http.put<Annuncio>(
       this.apiUrl+`${uuid}/favourite`,

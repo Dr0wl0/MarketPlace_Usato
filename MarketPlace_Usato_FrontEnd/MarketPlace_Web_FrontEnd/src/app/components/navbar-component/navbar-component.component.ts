@@ -1,30 +1,42 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar-component',
+  standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './navbar-component.component.html',
-  styleUrl: './navbar-component.component.css'
+  styleUrls: ['./navbar-component.component.css']
 })
-export class NavbarComponentComponent implements OnInit {
-  isNotLoggedIn = true;
-  private router: Router = new Router;
+export class NavbarComponentComponent implements OnDestroy {
+  isLoggedIn = false;
 
-  ngOnInit(): void {
-    this.checkLoginStatus();
-    window.addEventListener('storage', () => this.checkLoginStatus()); 
+  constructor(private router: Router,public authService: AuthService) {
+    this.updateLoginStatus();
+    // Aggiungiamo un listener per i cambiamenti di storage
+    window.addEventListener('storage', this.handleStorageEvent);
   }
 
-  checkLoginStatus(): void {
-    this.isNotLoggedIn = !!localStorage.getItem('userUuid');
+  ngOnDestroy(): void {
+    // Rimuoviamo il listener quando il componente viene distrutto
+    window.removeEventListener('storage', this.handleStorageEvent);
+  }
+
+  private handleStorageEvent = () => {
+    this.updateLoginStatus();
+  }
+
+  updateLoginStatus(): void {
+    this.isLoggedIn = !!localStorage.getItem('userUuid');
+    console.log('Login status updated:', this.isLoggedIn); // Debug
   }
 
   logout(): void {
     localStorage.removeItem('userUuid');
-    localStorage.removeItem('userName')
-    this.checkLoginStatus();
-    this.router.navigate(['/login'])
+    localStorage.removeItem('userName');
+    this.updateLoginStatus();
+    this.router.navigate(['/login']);
   }
 }

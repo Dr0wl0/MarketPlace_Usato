@@ -1,11 +1,20 @@
-<nav class="navbar">
+<nav class="navbar" *ngIf="authService.isLoggedIn$ | async">
   <div class="nav-left">
     <a routerLink="/annunci">📃 Annunci</a>
     <a routerLink="/favoriti">⭐ Preferiti</a>
     <a routerLink="/annunci-propri">📃 Annunci fatti da te</a>
   </div>
 
-  <div class="nav-right" *ngIf="isNotLoggedIn">
-    <a routerLink="/login">🔐 Login</a>
+  <div class="nav-right">
+    <div class="profile-dropdown">
+      <button class="profile-btn">
+        👤 Profilo: {{authService.currentUserName$ | async}}
+      </button>
+      <div class="dropdown-content">
+        <a routerLink="/profilo">Il mio profilo</a>
+        <a routerLink="/cambia-credenziali">Cambia credenziali</a>
+        <a (click)="authService.logout()">Logout</a>
+      </div>
+    </div>
   </div>
 </nav>
