@@ -72,11 +72,12 @@ export class MostraListaComponent implements OnInit {
     const annuncioToSend: Annuncio = {
       name: this.newAnnuncio.name,
       category: this.newAnnuncio.category as Category,
-      sellersName: userUuid, 
+      sellersName: '', 
       description: '',       
       price: 0,
       favourite: false,
-      id: 0
+      uuid: 0,
+      userid: userUuid
     };
 
     this.listService.addAnnuncio(annuncioToSend).subscribe(() => {
@@ -88,7 +89,7 @@ export class MostraListaComponent implements OnInit {
 
   toggleFavourite(annuncio: Annuncio): void {
   const newStatus = !annuncio.favourite;
-  this.listService.updateFavouriteStatus(annuncio.id, newStatus).subscribe({
+  this.listService.updateFavouriteStatus(annuncio.uuid, newStatus).subscribe({
     next: (updatedAnnuncio) => {
       annuncio.favourite = updatedAnnuncio.favourite; // aggiorna localmente
     },
