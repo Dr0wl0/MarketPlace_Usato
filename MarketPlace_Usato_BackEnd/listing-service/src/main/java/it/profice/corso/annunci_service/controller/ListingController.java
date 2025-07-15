@@ -44,6 +44,11 @@ public class ListingController {
         return listingService.findByCategory(Category.valueOf(categoryString.toUpperCase()));
     }
 
+    @GetMapping("/search/price/{price}")
+    public List<ListingDTO> findByPrice( @PathVariable Double price ){
+        return listingService.findByPrice( price );
+    }
+
     @DeleteMapping("/{uuid}")
     public void deleteListing( @PathVariable String uuid ){
         listingService.deleteByUuid( uuid );

@@ -4,30 +4,30 @@ server:
 spring:
   application:
     name: gateway-service
+
   cloud:
     gateway:
-      routes:
-        - id: login-service
-          uri: lb://login-registration-service
-          predicates:
-            - Path=/api/v1/login/**
-        - id: listing-service
-          uri: lb://listing-service
-          predicates:
-            - Path=/api/v1/listings/**
-  server:
-    webflux:
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowed-origins: "http://localhost:4200"
-            allowed-methods: "*"
-            allowed-headers: "*"
-            allow-credentials: true
+      server:
+        webflux:
+          routes:
+            - id: login-service
+              uri: lb://login-registration-service
+              predicates:
+                - Path=/api/v1/login/**
+            - id: listing-service
+              uri: lb://listing-service
+              predicates:
+                - Path=/api/v1/listings/**
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowed-origins: "http://localhost:4200"
+                allowed-methods: "*"
+                allowed-headers: "*"
+                allow-credentials: true
 
 eureka:
   client:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
-

@@ -10,13 +10,15 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  
-  login(username: string, password: string):Observable<{uuid: string}> {
-    return this.http.post<{uuid: string}>(`${this.apiUrl}/log`, { username, password });
+  // Login (come prima)
+  login(username: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/log`, { username, password }, {
+      withCredentials: true
+    });
   }
 
-  
+  // Nuovo metodo register
   register(nomeCognome: string,username: string, password: string) {
-    return this.http.post<void>(`${this.apiUrl}/register`, { nomeCognome, username, password });
+    return this.http.post(`${this.apiUrl}/register`, { nomeCognome, username, password });
   }
 }

@@ -2,11 +2,12 @@ import { Category } from "./Category.js";
 
 
 export interface Annuncio {
-  id: number;
-  name: string;
+  uuid: string;
+  userUuid: string
+  listingName: string;
   sellersName: string;
   description: string;
   category: Category;
-  price: number; 
+  price: number;
   favourite: boolean;
 }
