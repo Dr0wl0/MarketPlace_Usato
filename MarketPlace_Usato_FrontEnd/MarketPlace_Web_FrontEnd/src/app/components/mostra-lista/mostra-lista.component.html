@@ -8,6 +8,7 @@
 
 <div class="container" *ngIf="currentView === 'list'">
   <h2>Lista Annunci</h2>
+  <br /><br />
 
   <div class="filter">
     <label for="categoryFilter">Filtra per categoria:</label>
@@ -45,6 +46,7 @@
 
 <div *ngIf="currentView === 'form'">
   <h2>Nuovo Annuncio</h2>
+  <br /><br />
 
   <label for="annuncio-name">Nome:</label>
   <input id="annuncio-name" [(ngModel)]="newAnnuncio.name" placeholder="Inserisci nome annuncio" />
