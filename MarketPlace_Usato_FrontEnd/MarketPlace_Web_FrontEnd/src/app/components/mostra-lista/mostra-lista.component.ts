@@ -1,71 +1,47 @@
-
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ListService } from '../../services/list.service';
 import { Annuncio } from '../../models/annuncio';
-import { Category } from '../../models/Category';
-import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Category } from '../../models/categoria';
 
 @Component({
   selector: 'app-post-list',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './mostra-lista.component.html',
-  styleUrl:'./mostra-lista.component.css'
+  styleUrl: './mostra-lista.component.css'
 })
 export class MostraListaComponent implements OnInit {
   annunci: Annuncio[] = [];
+  categorie: Category[] = [];
   currentView: 'list' | 'form' = 'list';
 
   newAnnuncio: Partial<Annuncio> = {
     listingName: '',
     description: '',
     price: 0,
-    category: Category.CARS
+    categoryName: ''
   };
 
-  categoryLabels: { [key in Category]: string } = {
-    [Category.CARS]: 'Macchine',
-    [Category.ELECTRONICS]: 'Elettronica',
-    [Category.MOTORBIKES]: 'Moto',
-    [Category.SPORTS]: 'Sports',
-  };
+  selectedCategory: string | null = null;
 
   showScrollButton = false;
 
-@HostListener('window:scroll')
-onWindowScroll() {
-  this.showScrollButton = window.pageYOffset > 200;
-}
+  constructor(private listService: ListService, private http: HttpClient) {}
 
-scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-  getCategoryLabel(category: Category): string {
-    return this.categoryLabels[category] ?? category;
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    this.showScrollButton = window.pageYOffset > 200;
   }
 
-  selectedCategory: Category | null = null;
-
-  get filteredAnnunci(): Annuncio[] {
-    if (!this.selectedCategory) {
-      return this.annunci;
-    }
-
-    return this.annunci.filter(
-      (annuncio) => annuncio.category === this.selectedCategory
-    );
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
-
-  constructor(private listService: ListService) {}
 
   ngOnInit(): void {
-    this.listService.getAnnunci().subscribe((data) => {
-      console.log('Dati ricevuti:', data);
-      this.annunci = data || [];
-    });
+    this.loadAnnuncio();
+    this.loadCategorie();
   }
 
   loadAnnuncio(): void {
@@ -74,46 +50,63 @@ scrollToTop() {
     });
   }
 
+  loadCategorie(): void {
+    this.http.get<Category[]>('http://localhost:8080/api/v1/category')
+      .subscribe((data) => {
+        this.categorie = data;
+      });
+  }
+
+  get filteredAnnunci(): Annuncio[] {
+    if (!this.selectedCategory) return this.annunci;
+    return this.annunci.filter(a => a.categoryName === this.selectedCategory);
+  }
+
   publishAnnuncio(): void {
-    if (!this.newAnnuncio.listingName || !this.newAnnuncio.description || !this.newAnnuncio.price) return;
+    const { listingName, description, price, categoryName } = this.newAnnuncio;
+
+    if (!listingName || !description || !price || !categoryName) {
+      alert("Compila tutti i campi prima di pubblicare l'annuncio.");
+      return;
+    }
 
     const userUuid = localStorage.getItem('userUuid');
-
     if (!userUuid) {
       alert('Utente non loggato. Effettua il login per pubblicare un annuncio.');
       return;
     }
 
     const annuncioToSend: Annuncio = {
-      listingName: this.newAnnuncio.listingName,
-      category: this.newAnnuncio.category as Category,
-      description: this.newAnnuncio.description, 
-      price: this.newAnnuncio.price, 
+      listingName,
+      description,
+      price,
+      categoryName,
       favourite: false,
       uuid: '',
-      userUuid: userUuid
+      userUuid
     };
 
     this.listService.addAnnuncio(annuncioToSend).subscribe(() => {
-      this.newAnnuncio = { listingName: '', category: Category.CARS,description: '', price: 0, userUuid: userUuid }; 
-      this.loadAnnuncio(); 
+      this.newAnnuncio = {
+        listingName: '',
+        description: '',
+        price: 0,
+        categoryName: ''
+      };
+      this.loadAnnuncio();
       this.currentView = 'list';
     });
   }
 
   toggleFavourite(annuncio: Annuncio): void {
-  const newStatus = !annuncio.favourite;
-  this.listService.updateFavouriteStatus(annuncio.uuid, newStatus).subscribe({
-    next: (updatedAnnuncio) => {
-      annuncio.favourite = updatedAnnuncio.favourite; // aggiorna localmente
-    },
+    const newStatus = !annuncio.favourite;
+    this.listService.updateFavouriteStatus(annuncio.uuid, newStatus).subscribe({
+      next: (updatedAnnuncio) => {
+        annuncio.favourite = updatedAnnuncio.favourite;
+      },
       error: () => {
         alert('Errore nel modificare il preferito');
       }
     });
   }
-
-
-
 }
-

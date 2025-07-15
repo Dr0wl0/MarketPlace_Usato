@@ -1,6 +1,0 @@
-export enum Category {
-  ELECTRONICS = 'ELECTRONICS',
-  CARS = "CARS",
-  MOTORBIKES = "MOTORBIKES",
-  SPORTS = "SPORTS",
-}
