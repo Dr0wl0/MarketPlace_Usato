@@ -5,7 +5,8 @@
 
 <hr />
 
-<div class="container", *ngIf="currentView === 'list'">
+
+<div class="container" *ngIf="currentView === 'list'">
   <h2>Lista Annunci</h2>
 
   <div class="filter">
@@ -18,29 +19,20 @@
     </select>
   </div>
 
-  <div class="add-annuncio-form">
-    <h3>Nuovo Annuncio</h3>
-    
-    <label for="annuncio-name">Nome:</label>
-    <input id="annuncio-name" [(ngModel)]="newAnnuncio.name" placeholder="Inserisci nome annuncio" />
-
-    <label for="category-select">Categoria:</label>
-    <select id="category-select" [(ngModel)]="newAnnuncio.category">
-      <option *ngFor="let categoryKey of (categoryLabels | keyvalue)" [value]="categoryKey.key">
-        {{ categoryKey.value }}
-      </option>
-    </select>
-
-    <button (click)="publishAnnuncio()">Pubblica Annuncio</button>
-  </div>
-
   <hr />
 
   <div *ngIf="filteredAnnunci.length > 0; else noAnnunci">
     <ul>
       <li *ngFor="let annuncio of filteredAnnunci">
         <strong>{{ annuncio.name }}</strong> - 
-        Categoria: {{ getCategoryLabel(annuncio.category) }}
+        Categoria: {{ getCategoryLabel(annuncio.category) }}<br />
+        Descrizione: {{ annuncio.description }}<br />
+        Prezzo: €{{ annuncio.price }}<br />
+
+        <button (click)="toggleFavourite(annuncio)">
+          {{ annuncio.favourite ? '⭐ Rimuovi preferito' : '☆ Aggiungi ai preferiti' }}
+        </button>
+        <hr />
       </li>
     </ul>
   </div>
@@ -50,11 +42,18 @@
   </ng-template>
 </div>
 
+
 <div *ngIf="currentView === 'form'">
   <h2>Nuovo Annuncio</h2>
 
   <label for="annuncio-name">Nome:</label>
   <input id="annuncio-name" [(ngModel)]="newAnnuncio.name" placeholder="Inserisci nome annuncio" />
+
+  <label for="annuncio-description">Descrizione:</label>
+  <input id="annuncio-description" [(ngModel)]="newAnnuncio.description" placeholder="Inserisci descrizione" />
+
+  <label for="annuncio-price">Prezzo (€):</label>
+  <input id="annuncio-price" type="number" [(ngModel)]="newAnnuncio.price" placeholder="Inserisci prezzo" />
 
   <label for="category-select">Categoria:</label>
   <select id="category-select" [(ngModel)]="newAnnuncio.category">
@@ -63,6 +62,6 @@
     </option>
   </select>
 
+  <br /><br />
   <button (click)="publishAnnuncio()">Pubblica Annuncio</button>
 </div>
-

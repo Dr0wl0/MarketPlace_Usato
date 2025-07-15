@@ -62,11 +62,18 @@ export class MostraListaComponent implements OnInit {
   publishAnnuncio(): void {
     if (!this.newAnnuncio.name || !this.newAnnuncio.category) return;
 
+    const userUuid = localStorage.getItem('userUuid'); 
+
+    if (!userUuid) {
+      alert('Utente non loggato. Effettua il login per pubblicare un annuncio.');
+      return;
+    }
+
     const annuncioToSend: Annuncio = {
       name: this.newAnnuncio.name,
       category: this.newAnnuncio.category as Category,
-      sellersName: '',
-      description: '',
+      sellersName: userUuid, 
+      description: '',       
       price: 0,
       favourite: false,
       id: 0
@@ -78,5 +85,17 @@ export class MostraListaComponent implements OnInit {
       this.currentView = 'list';
     });
   }
+
+  toggleFavourite(annuncio: Annuncio): void {
+  const newStatus = !annuncio.favourite;
+  this.listService.updateFavouriteStatus(annuncio.id, newStatus).subscribe({
+    next: (updatedAnnuncio) => {
+      annuncio.favourite = updatedAnnuncio.favourite; // aggiorna localmente
+    },
+    error: () => {
+      alert('Errore nel modificare il preferito');
+    }
+  });
+}
 }
 

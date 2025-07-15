@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ListService {
-  private apiUrl = 'http://localhost:8080/api/items'; // URL del backend
+  private apiUrl = 'http://localhost:8080/api/v1/listing'; // URL del backend
 
   constructor(private http: HttpClient) {}
 
@@ -16,6 +16,14 @@ export class ListService {
   }
 
   addAnnuncio(annuncio: Annuncio): Observable<Annuncio> {
-  return this.http.post<Annuncio>(this.apiUrl, annuncio);
-    }
+    return this.http.post<Annuncio>(this.apiUrl, annuncio);
+  }
+    
+  updateFavouriteStatus(id: number, favourite: boolean): Observable<Annuncio> {
+    return this.http.put<Annuncio>(
+      this.apiUrl+'${id}/favourite',
+      null,
+      { params: { favourite } }
+    );
+  }
 }

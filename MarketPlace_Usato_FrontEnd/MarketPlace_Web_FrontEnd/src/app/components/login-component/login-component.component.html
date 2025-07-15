@@ -16,4 +16,8 @@
   </form>
 
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <p>Non hai un account?
+    <button type="button" [routerLink]="['/register']">Registrati</button>
+  </p>
 </div>
