@@ -8,11 +8,11 @@
 		<version>3.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>it.profice.corso</groupId>
-	<artifactId>listing-service</artifactId>
+	<groupId>it.profis.corso</groupId>
+	<artifactId>favorite-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>listing-service</name>
-	<description>Service for listing</description>
+	<name>favorite-service</name>
+	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -63,17 +63,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webflux</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.checkerframework</groupId>
-            <artifactId>checker-qual</artifactId>
-            <version>3.48.3</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
+	</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

@@ -1,16 +1,17 @@
 package it.profice.corso.annunci_service.service;
 
+import it.profice.corso.annunci_service.DTO.CategoryDTO;
 import it.profice.corso.annunci_service.DTO.ListingDTO;
-import it.profice.corso.annunci_service.Enum.Category;
-import it.profice.corso.annunci_service.config.WebClientBuilderConfig;
+import it.profice.corso.annunci_service.exception.CategoryNotFound;
 import it.profice.corso.annunci_service.exception.ListingNotFoundException;
+import it.profice.corso.annunci_service.model.Category;
 import it.profice.corso.annunci_service.model.Listing;
+import it.profice.corso.annunci_service.repository.CategoryRepositroy;
 import it.profice.corso.annunci_service.repository.ListingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class ListingServiceImpl implements ListingService{
 
     private final ListingRepository listingRepository;
+    private final CategoryRepositroy categoryRepositroy;
 
     @Override
     public ListingDTO findByUuid(String uuid) {
@@ -38,7 +40,14 @@ public class ListingServiceImpl implements ListingService{
     @Override
     public ListingDTO save( ListingDTO listing ) {
         listing.setUuid(UUID.randomUUID().toString());
-        return modelToDto( listingRepository.save( dtoToModel( listing ) ) );
+
+        Category category = categoryRepositroy.findCategoryByName(listing.getCategoryName()).orElseThrow(CategoryNotFound::new);
+
+        Listing listing1 = Listing.builder()
+                .category(category)
+                .build();
+
+        return modelToDto( listingRepository.save( dtoToModel( listing, category ) ) );
     }
 
     @Override
@@ -50,9 +59,9 @@ public class ListingServiceImpl implements ListingService{
     }
 
     @Override
-    public List<ListingDTO> findByCategory(Category category) {
-        return listingRepository.findByCategory( category )
-                .stream()
+    public List<ListingDTO> findByCategory(String categoryName) {
+        List<Listing> listings = listingRepository.findByCategoryName(categoryName);
+        return listings.stream()
                 .map(this::modelToDto)
                 .toList();
     }
@@ -93,12 +102,12 @@ public class ListingServiceImpl implements ListingService{
                 .sellersName(listing.getSellersName())
                 .description(listing.getDescription())
                 .favorite(listing.isFavorite())
-                .category(listing.getCategory())
+                .categoryName(listing.getCategory().getName())
                 .price(listing.getPrice())
                 .build();
     }
 
-    public Listing dtoToModel (ListingDTO listingDto){
+    public Listing dtoToModel (ListingDTO listingDto, Category category){
         return Listing.builder()
                 .uuid(listingDto.getUuid())
                 .userUuid(listingDto.getUserUuid())
@@ -106,7 +115,7 @@ public class ListingServiceImpl implements ListingService{
                 .sellersName(listingDto.getSellersName())
                 .description(listingDto.getDescription())
                 .favorite(listingDto.isFavorite())
-                .category(listingDto.getCategory())
+                .category(category)
                 .price(listingDto.getPrice())
                 .build();
     }

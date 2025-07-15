@@ -18,6 +18,10 @@ spring:
               uri: lb://listing-service
               predicates:
                 - Path=/api/v1/listings/**
+            - id: listing-service
+              uri: lb://listing-service
+              predicates:
+                - Path=/api/v1/category/**
           globalcors:
             cors-configurations:
               '[/**]':

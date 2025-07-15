@@ -1,6 +1,6 @@
 package it.profice.corso.annunci_service.DTO;
 
-import it.profice.corso.annunci_service.Enum.Category;
+import it.profice.corso.annunci_service.model.Category;
 import lombok.*;
 
 @Data
@@ -14,7 +14,7 @@ public class ListingDTO {
     private String listingName;
     private String sellersName;
     private String description;
-    private Category category;
+    private String categoryName;
     private Double price;
 
     private boolean favorite;
