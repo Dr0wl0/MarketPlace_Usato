@@ -63,7 +63,7 @@ export class MostraListaComponent implements OnInit {
   }
 
   publishAnnuncio(): void {
-    if (!this.newAnnuncio.listingName || !this.newAnnuncio.category) return;
+    if (!this.newAnnuncio.listingName || !this.newAnnuncio.description || !this.newAnnuncio.price) return;
 
     const userUuid = localStorage.getItem('userUuid');
 
@@ -75,8 +75,8 @@ export class MostraListaComponent implements OnInit {
     const annuncioToSend: Annuncio = {
       listingName: this.newAnnuncio.listingName,
       category: this.newAnnuncio.category as Category,
-      description: '',  //DA COMPLETARE     
-      price: 0, //DA COMPLETARE */
+      description: this.newAnnuncio.description, 
+      price: this.newAnnuncio.price, 
       favourite: false,
       uuid: '',
       userUuid: userUuid
