@@ -48,7 +48,11 @@ export class MostraListaComponent implements OnInit {
     const annuncioToSend: Annuncio = {
       id: 0, // oppure può essere omesso se il backend lo genera
       name: this.newAnnuncio.name,
-      category: this.newAnnuncio.category as Category
+      category: this.newAnnuncio.category as Category,
+      sellersName: '',
+      description: '',
+      price: 0,
+      favourite: false
     };
 
     this.listService.addAnnuncio(annuncioToSend).subscribe(() => {
