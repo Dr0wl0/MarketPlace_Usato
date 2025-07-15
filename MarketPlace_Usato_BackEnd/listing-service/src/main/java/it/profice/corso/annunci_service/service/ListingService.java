@@ -12,6 +12,7 @@ public interface ListingService {
     ListingDTO save ( ListingDTO listing );
     List<ListingDTO> findByName ( String listingName );
     List<ListingDTO> findByCategory( Category category );
+    List<ListingDTO> findByPrice( Double price );
 
     void deleteByUuid( String uuid );
 

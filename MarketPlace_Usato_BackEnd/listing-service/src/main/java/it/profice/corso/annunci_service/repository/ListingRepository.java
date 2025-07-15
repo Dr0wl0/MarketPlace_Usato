@@ -20,4 +20,7 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
 
     Optional<Listing> findByUuid(String uuid );
 
+    @Query(value = "SELECT * FROM Listing l WHERE l.price BETWEEN 0.0 AND :price", nativeQuery = true)
+    List<Listing> findByPrice( Double price );
+
 }

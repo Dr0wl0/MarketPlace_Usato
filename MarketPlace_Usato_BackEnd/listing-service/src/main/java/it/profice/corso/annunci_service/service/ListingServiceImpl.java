@@ -68,6 +68,14 @@ public class ListingServiceImpl implements ListingService{
     }
 
     @Override
+    public List<ListingDTO> findByPrice(Double price) {
+        return listingRepository.findByPrice( price )
+                .stream()
+                .map(this::modelToDto)
+                .toList();
+    }
+
+    @Override
     public void deleteByUuid(String uuid) {
         Listing listingToDelete = listingRepository.findByUuid( uuid ).orElseThrow(ListingNotFoundException::new);
         listingRepository.deleteById(listingToDelete.getId());

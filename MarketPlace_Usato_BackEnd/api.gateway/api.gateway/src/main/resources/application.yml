@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: gateway-service
+
   cloud:
     gateway:
       routes:
@@ -15,8 +16,7 @@ spring:
           uri: lb://listing-service
           predicates:
             - Path=/api/v1/listings/**
-  server:
-    webflux:
+
       globalcors:
         cors-configurations:
           '[/**]':
@@ -30,4 +30,3 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
-
