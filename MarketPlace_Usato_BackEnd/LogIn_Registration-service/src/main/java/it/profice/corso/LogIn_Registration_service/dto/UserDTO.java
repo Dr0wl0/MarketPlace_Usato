@@ -15,6 +15,6 @@ public class UserDTO {
 
     private String username;
     private String password;
-    private String nomeCognome;
+    private String email;
     private Boolean isLogged;
 }

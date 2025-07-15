@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         User userToUpdate = userRepository.findByUuid( uuid ).orElseThrow(UserNotFoundException::new);
         userToUpdate.setPassword(userDTO.getPassword());
         userToUpdate.setUsername(userDTO.getUsername());
-        userToUpdate.setNomeCognome(userDTO.getNomeCognome());
+        userToUpdate.setEmail(userDTO.getEmail());
         return modelToDto(userRepository.save(userToUpdate));
     }
 
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
                 .uuid(user.getUuid())
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .nomeCognome(user.getNomeCognome())
+                .email(user.getEmail())
                 .isLogged(user.getIsLogged())
                 .build();
     }
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
                 .uuid(userDto.getUuid())
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
-                .nomeCognome(userDto.getNomeCognome())
+                .email(userDto.getEmail())
                 .isLogged(userDto.getIsLogged())
                 .build();
     }
