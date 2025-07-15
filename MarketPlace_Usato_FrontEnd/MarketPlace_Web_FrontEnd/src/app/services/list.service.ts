@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ListService {
-  private apiUrl = 'http://localhost:8080/api/items'; // URL del backend
+  private apiUrl = 'http://localhost:8080/api/v1/listings'; // URL del backend
 
   constructor(private http: HttpClient) {}
 

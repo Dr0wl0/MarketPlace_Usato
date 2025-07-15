@@ -1,5 +1,6 @@
 export enum Category {
-  FOOD = 'FOOD',
   ELECTRONICS = 'ELECTRONICS',
-  CLOTHING = 'CLOTHING',
+  CARS = "CARS",
+  MOTORBIKES = "MOTORBIKES",
+  SPORTS = "SPORTS",
 }

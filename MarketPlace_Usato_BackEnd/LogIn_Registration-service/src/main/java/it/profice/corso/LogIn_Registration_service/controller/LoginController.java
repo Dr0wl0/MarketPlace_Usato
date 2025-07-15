@@ -24,9 +24,9 @@ public class LoginController {
     @PostMapping("/log")
     public UserDTO login(@RequestBody UserDTO userDTO){
       UserDTO userDtoOpt = userService.findByUsername(userDTO.getUsername());
-      if(userDtoOpt.getPassword().equals(userDTO.getPassword())){
-          userService.log(userDtoOpt);
-      }
+//      if(userDtoOpt.getPassword().equals(userDTO.getPassword())){
+//          userService.log(userDtoOpt);
+//      }
       return userDtoOpt;
     }
 

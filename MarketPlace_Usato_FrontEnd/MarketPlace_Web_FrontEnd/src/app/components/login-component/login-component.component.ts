@@ -24,7 +24,7 @@ export class LoginComponent {
       next: (response:{uuid: string}) => {
         localStorage.setItem('userUuid', response.uuid);
 
-        this.router.navigate(['/home']);
+        this.router.navigate(['/annunci']);
       },
       error: () => {
         this.errorMessage = 'Username o password errati!';
