@@ -1,14 +1,11 @@
 package it.profice.corso.annunci_service.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import it.profice.corso.annunci_service.DTO.ListingDTO;
-import it.profice.corso.annunci_service.Enum.Category;
 import it.profice.corso.annunci_service.service.ListingService;
 import lombok.RequiredArgsConstructor;
 
@@ -17,8 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/listings")
 public class ListingController {
 
-    @Autowired
-    private final ListingService listingService=null; //rimuovi il null se da problemi
+    private final ListingService listingService;
 
     @GetMapping
     public List<ListingDTO> findAll() { return listingService.findAll(); }
@@ -35,7 +31,7 @@ public class ListingController {
 
     @GetMapping("/search/category/{categoryString}")
     public List<ListingDTO> findByCategory( @PathVariable String categoryString ){
-        return listingService.findByCategory(Category.valueOf(categoryString.toUpperCase()));
+        return listingService.findByCategory(categoryString.toUpperCase());
     }
 
     @GetMapping("/search/price/{price}")

@@ -1,7 +1,6 @@
 package it.profice.corso.annunci_service.service;
 
 import it.profice.corso.annunci_service.DTO.ListingDTO;
-import it.profice.corso.annunci_service.Enum.Category;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -12,7 +11,7 @@ public interface ListingService {
     List<ListingDTO> findAll();
     ListingDTO save ( ListingDTO listing );
     List<ListingDTO> findByName ( String listingName );
-    List<ListingDTO> findByCategory( Category category );
+    List<ListingDTO> findByCategory( String categoryName );
     List<ListingDTO> findByPrice( Double price );
 
     void deleteByUuid( String uuid );
