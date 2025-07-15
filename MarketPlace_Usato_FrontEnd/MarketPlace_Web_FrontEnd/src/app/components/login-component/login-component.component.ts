@@ -24,7 +24,7 @@ export class LoginComponent {
     this.authService.login(this.username, this.email, this.password).subscribe({
       next: (response:{uuid: string},) => {
         localStorage.setItem('userUuid', response.uuid);
-        localStorage.setItem('userName', this.username)
+        localStorage.setItem('userName', this.username);
 
         this.router.navigate(['/annunci']);
       },

@@ -1,0 +1,12 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <a routerLink="/annunci">📃 Annunci</a>
+    <a routerLink="/favoriti">⭐ Preferiti</a>
+    <a routerLink="/annunci-propri">📃 Annunci fatti da te</a>
+  </div>
+
+  <div class="nav-right" *ngIf="isNotLoggedIn">
+    <a routerLink="/login">🔐 Login</a>
+    <a routerLink="/register">📝 Register</a>
+  </div>
+</nav>

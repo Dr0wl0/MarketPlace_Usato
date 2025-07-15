@@ -2,6 +2,7 @@ package it.profice.corso.annunci_service.service;
 
 import it.profice.corso.annunci_service.DTO.ListingDTO;
 import it.profice.corso.annunci_service.Enum.Category;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -16,4 +17,5 @@ public interface ListingService {
 
     void deleteByUuid( String uuid );
 
+    ResponseEntity<ListingDTO>  toggleFavourite(String uuid);
 }
