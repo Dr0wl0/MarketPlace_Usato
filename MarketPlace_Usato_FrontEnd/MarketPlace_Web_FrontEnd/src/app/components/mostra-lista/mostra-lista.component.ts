@@ -3,9 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ListService } from '../../services/list.service';
 import { Annuncio } from '../../models/annuncio';
 import { Category } from '../../models/Category';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-post-list',
+  imports: [RouterLink],
   templateUrl: './mostra-lista.component.html',
 })
 export class MostraListaComponent implements OnInit {
@@ -46,13 +48,13 @@ export class MostraListaComponent implements OnInit {
 
     // Type assertion per garantire che i tipi siano corretti
     const annuncioToSend: Annuncio = {
-      id: 0, // oppure può essere omesso se il backend lo genera
       name: this.newAnnuncio.name,
       category: this.newAnnuncio.category as Category,
       sellersName: '',
       description: '',
       price: 0,
-      favourite: false
+      favourite: false,
+      id: 0
     };
 
     this.listService.addAnnuncio(annuncioToSend).subscribe(() => {
