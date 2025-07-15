@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-post-list',
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './mostra-lista.component.html',
+  styleUrl:'./mostra-lista.component.css'
 })
 export class MostraListaComponent implements OnInit {
   annunci: Annuncio[] = [];

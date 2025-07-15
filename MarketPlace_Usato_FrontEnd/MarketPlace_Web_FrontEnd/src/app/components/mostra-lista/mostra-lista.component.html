@@ -1,75 +1,111 @@
-<h1>ThriftGo</h1>
+<div class="annunci-container">
+  <header class="annunci-header">
+    <h1 class="annunci-title">
+      <span class="logo-icon">🛍️</span> ThriftGo!
+    </h1>
+    
+    <nav class="annunci-nav">
+      <button class="annunci-nav-btn active" (click)="currentView = 'list'">
+        <i class="fas fa-list"></i> Visualizza annunci
+      </button>
+      <button class="annunci-nav-btn" (click)="currentView = 'form'">
+        <i class="fas fa-plus-circle"></i> Nuovo annuncio
+      </button>
+      <button class="annunci-nav-btn">
+        <i class="fas fa-heart"></i> Preferiti
+      </button>
+    </nav>
+  </header>
 
-<div class="view-toggle">
-  <button (click)="currentView = 'list'">Visualizza annunci</button>
-  <button (click)="currentView = 'form'">Nuovo annuncio</button>
-  <button>Preferiti</button> <!-- Da completare bene -->
-</div>
+  <main class="annunci-main-content">
+    <!-- Vista Lista Annunci -->
+    <section *ngIf="currentView === 'list'" class="annunci-list-section">
+      <h2 class="section-title">
+        <i class="fas fa-tag"></i> Lista Annunci
+      </h2>
+      
+      <div class="annunci-filters">
+        <div class="filter-group">
+          <label><i class="fas fa-euro-sign"></i> Range di prezzo</label>
+          <input type="range" class="price-filter">
+          <div class="price-labels">
+            <span>€0</span>
+            <span>€50</span>
+            <span>€100+</span>
+          </div>
+        </div>
+        
+        <div class="filter-group">
+          <label><i class="fas fa-filter"></i> Filtra per categoria</label>
+          <select [(ngModel)]="selectedCategory">
+            <option [ngValue]="null">Tutte le categorie</option>
+            <option *ngFor="let cat of (categoryLabels | keyvalue)" [ngValue]="cat.key">
+              {{ cat.value }}
+            </option>
+          </select>
+        </div>
+      </div>
 
-<hr />
+      <div *ngIf="filteredAnnunci.length > 0; else noAnnunci" class="annunci-grid">
+        <article *ngFor="let annuncio of filteredAnnunci" class="annuncio-card" [class.favorite]="annuncio.favourite">
+          <div class="card-badge">{{ getCategoryLabel(annuncio.category) }}</div>
+          <h3>{{ annuncio.listingName }}</h3>
+          <p class="annuncio-description">{{ annuncio.description }}</p>
+          <div class="annuncio-footer">
+            <span class="price">€{{ annuncio.price }}</span>
+            <button class="favourite-btn" (click)="toggleFavourite(annuncio)">
+              {{ annuncio.favourite ? '⭐ Preferito' : '☆ Aggiungi' }}
+            </button>
+          </div>
+        </article>
+      </div>
 
+      <ng-template #noAnnunci>
+        <div class="no-annunci">
+          <i class="fas fa-search"></i>
+          <p>Nessun annuncio disponibile</p>
+        </div>
+      </ng-template>
+    </section>
 
-<div class="container" *ngIf="currentView === 'list'">
-  <h2>Lista Annunci</h2>
-  <br />
+    <!-- Vista Nuovo Annuncio -->
+    <section *ngIf="currentView === 'form'" class="annunci-form-section">
+      <h2 class="section-title">
+        <i class="fas fa-plus-circle"></i> Nuovo Annuncio
+      </h2>
+      
+      <form class="new-annuncio-form">
+        <div class="form-group">
+          <label><i class="fas fa-heading"></i> Nome annuncio</label>
+          <input type="text" [(ngModel)]="newAnnuncio.listingName" name="listingName" placeholder="Es. iPhone 12 usato">
+        </div>
 
-   <p>Per prezzo: <input type="range"></p> <!-- Da completare bene -->
+        <div class="form-group">
+          <label><i class="fas fa-align-left"></i> Descrizione</label>
+          <textarea [(ngModel)]="newAnnuncio.description" name="description" rows="4" 
+                    placeholder="Descrivi l'articolo in dettaglio..."></textarea>
+        </div>
 
-  <div class="filter">
-    <label for="categoryFilter">Filtra per categoria:</label>
-    <select id="categoryFilter" [(ngModel)]="selectedCategory">
-      <option [ngValue]="null">Tutte le categorie</option>
-      <option *ngFor="let cat of (categoryLabels | keyvalue)" [ngValue]="cat.key">
-        {{ cat.value }}
-      </option>
-    </select>
-  </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fas fa-euro-sign"></i> Prezzo (€)</label>
+            <input type="number" [(ngModel)]="newAnnuncio.price" name="price" placeholder="0">
+          </div>
 
-  <hr />
+          <div class="form-group">
+            <label><i class="fas fa-tags"></i> Categoria</label>
+            <select [(ngModel)]="newAnnuncio.category" name="category">
+              <option *ngFor="let categoryKey of (categoryLabels | keyvalue)" [value]="categoryKey.key">
+                {{ categoryKey.value }}
+              </option>
+            </select>
+          </div>
+        </div>
 
-  <div *ngIf="filteredAnnunci.length > 0; else noAnnunci">
-    <ul>
-      <li *ngFor="let annuncio of filteredAnnunci">
-        <strong>{{ annuncio.listingName
-     }}</strong> -
-        Categoria: {{ getCategoryLabel(annuncio.category) }}<br />
-        Descrizione: {{ annuncio.description }}<br />
-        Prezzo: €{{ annuncio.price }}<br />
-
-        <button (click)="toggleFavourite(annuncio)">
-          {{ annuncio.favourite ? '⭐ Rimuovi preferito' : '☆ Aggiungi ai preferiti' }}
+        <button type="button" class="submit-btn" (click)="publishAnnuncio()">
+          <i class="fas fa-paper-plane"></i> Pubblica Annuncio
         </button>
-        <hr />
-      </li>
-    </ul>
-  </div>
-
-  <ng-template #noAnnunci>
-    <p>Nessun annuncio disponibile per la categoria selezionata.</p>
-  </ng-template>
-</div>
-
-
-<div *ngIf="currentView === 'form'">
-  <h2>Nuovo Annuncio</h2>
-  <br /><br />
-  
-  <label for="annuncio.listingName">Nome:</label>
-  <input id="annuncio.listingName" [(ngModel)]="newAnnuncio.listingName" placeholder="Inserisci nome annuncio" />
-
-  <label for="annuncio-description">Descrizione:</label>
-  <input id="annuncio-description" [(ngModel)]="newAnnuncio.description" placeholder="Inserisci descrizione" />
-
-  <label for="annuncio-price">Prezzo (€):</label>
-  <input id="annuncio-price" type="number" [(ngModel)]="newAnnuncio.price" placeholder="Inserisci prezzo" />
-
-  <label for="category-select">Categoria:</label>
-  <select id="category-select" [(ngModel)]="newAnnuncio.category">
-    <option *ngFor="let categoryKey of (categoryLabels | keyvalue)" [value]="categoryKey.key">
-      {{ categoryKey.value }}
-    </option>
-  </select>
-
-  <br /><br />
-  <button (click)="publishAnnuncio()">Pubblica Annuncio</button>
+      </form>
+    </section>
+  </main>
 </div>

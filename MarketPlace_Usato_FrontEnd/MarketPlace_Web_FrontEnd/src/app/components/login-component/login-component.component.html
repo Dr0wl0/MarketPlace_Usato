@@ -1,25 +1,45 @@
-<h1>ThriftGo</h1>
-
-<div class="login-box">
-  <h2>Login</h2>
+<div class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
+  <h1 class="text-center text-ocra mb-4">ThriftGo!!</h1>
   
-  <form (ngSubmit)="onSubmit()">
-    <div>
-      <label>Username:</label>
-      <input type="text" [(ngModel)]="username" name="username" required>
+  <div class="login-card">
+    <h1 class="text-center mb-3 text-ocra">Login</h1>
+    <h4 class="text-center mb-4">Accedi al tuo account</h4>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+          class="form-control"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          class="form-control"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-ocra w-100">Accedi</button>
+    </form>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3 text-center">
+      {{ errorMessage }}
     </div>
 
-    <div>
-      <label>Password:</label>
-      <input type="password" [(ngModel)]="password" name="password" required>
-    </div>
-
-    <button type="submit">Accedi</button>
-  </form>
-
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-
-  <p>Non hai un account?
-    <button type="button" [routerLink]="['/register']">Registrati</button>
-  </p>
+    <p class="mt-4 text-center">
+      Non hai un account?
+      <button type="button" class="link-btn" [routerLink]="['/register']">Registrati</button>
+    </p>
+  </div>
 </div>
