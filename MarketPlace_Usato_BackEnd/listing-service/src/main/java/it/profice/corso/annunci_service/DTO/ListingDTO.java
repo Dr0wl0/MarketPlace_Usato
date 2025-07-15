@@ -18,4 +18,8 @@ public class ListingDTO {
     private Double price;
 
     private boolean favorite;
+
+    public void setFavourite() {
+        this.favorite = !this.favorite;
+    }
 }

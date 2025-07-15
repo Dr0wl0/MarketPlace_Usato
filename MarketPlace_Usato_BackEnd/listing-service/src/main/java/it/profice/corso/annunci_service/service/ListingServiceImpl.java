@@ -8,6 +8,7 @@ import it.profice.corso.annunci_service.model.Listing;
 import it.profice.corso.annunci_service.repository.ListingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -79,6 +80,20 @@ public class ListingServiceImpl implements ListingService{
     public void deleteByUuid(String uuid) {
         Listing listingToDelete = listingRepository.findByUuid( uuid ).orElseThrow(ListingNotFoundException::new);
         listingRepository.deleteById(listingToDelete.getId());
+    }
+
+    @Override
+    public ResponseEntity<ListingDTO> toggleFavourite(String uuid) {
+        {
+            ListingDTO listing = findByUuid(uuid);
+
+            if (listing != null) {
+                listing.setFavourite();
+                return ResponseEntity.ok(listing);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }
     }
 
     public ListingDTO modelToDto(Listing listing){
