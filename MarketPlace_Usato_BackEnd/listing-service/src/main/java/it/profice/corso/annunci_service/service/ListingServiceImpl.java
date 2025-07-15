@@ -20,21 +20,10 @@ import java.util.UUID;
 public class ListingServiceImpl implements ListingService{
 
     private final ListingRepository listingRepository;
-    private final WebClient.Builder webClientBuilderConfig;
 
     @Override
     public ListingDTO findByUuid(String uuid) {
-
-        ListingDTO ret = modelToDto( listingRepository.findByUuid( uuid ).orElseThrow(ListingNotFoundException::new));
-        ret.setUserUuid(
-                webClientBuilderConfig.build().get()
-                        .uri("http://login-registration-service/api/v1/login/{uuid}/user", uuid)
-                        .retrieve()
-                        .bodyToMono(String.class)
-                        .block()
-        );
-
-        return ret;
+        return modelToDto( listingRepository.findByUuid( uuid ).orElseThrow(ListingNotFoundException::new));
     }
 
     @Override
