@@ -23,8 +23,4 @@ public class CartDTO {
     private List<CartItem> items = new ArrayList<>();
     private Double tot;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
 }

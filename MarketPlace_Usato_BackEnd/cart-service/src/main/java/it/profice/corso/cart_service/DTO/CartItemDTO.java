@@ -13,6 +13,6 @@ public class CartItemDTO {
 
     private String uuid;
     private String listingUuid;
-    private int quantity;
+    private Integer quantity;
 
 }
