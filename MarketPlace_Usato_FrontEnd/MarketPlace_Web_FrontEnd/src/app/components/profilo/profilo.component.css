@@ -41,7 +41,7 @@
 
 .annuncio-card {
   padding: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid darkslategrey;
   border-radius: 8px;
   transition: transform 0.2s;
 }
@@ -54,4 +54,31 @@
   font-weight: bold;
   color: #16a34a;
 }
+
+.bottoneElimina {
+  background: linear-gradient(135deg, #e02424, #b91c1c);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(185, 28, 28, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  user-select: none;
+  min-width: 100px;
+}
+
+.bottoneElimina:hover {
+  background: linear-gradient(135deg, #b91c1c, #7f1414);
+  box-shadow: 0 10px 20px rgba(127, 20, 20, 0.7);
+  transform: translateY(-3px);
+}
+
+.bottoneElimina:active {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(185, 28, 28, 0.8);
+}
+
 

@@ -22,21 +22,26 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-.annunci-nav-btn {
-  background: #4f46e5;
-  color: white;
-  padding: 0.7rem 1.4rem;
-  border: none;
+.annunci-nav .btn {
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
   border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
-.annunci-nav-btn:hover {
-  background: #4338ca;
+.annunci-nav .btn-outline-primary:hover {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+  color: white;
+}
+
+.annunci-nav .btn-outline-success:hover {
+  background-color: #16a34a;
+  border-color: #16a34a;
+  color: white;
 }
 
 .annunci-filters {
@@ -156,4 +161,241 @@ select {
 
 .submit-btn:hover {
   background: #4338ca;
+}
+
+.cerca {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.2rem; 
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 320px; 
+  gap: 0.5rem; 
+  margin-bottom: 1rem;
+}
+
+.cerca label {
+  font-weight: 600;
+  color: #333;
+}
+
+.cerca input {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.cerca input:focus {
+  outline: none;
+  border-color: #4f46e5; /* colore viola accentuato al focus */
+  box-shadow: 0 0 5px rgba(79, 70, 229, 0.5);
+}
+
+.prezzo{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.2rem; 
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 320px; 
+  gap: 0.5rem; 
+  margin-bottom: 1rem;
+}
+.prezzo label {
+  font-weight: 600;
+  color: #333;
+}
+
+.prezzo input {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.prezzo input:focus {
+  outline: none;
+  border-color: #4f46e5; /* colore viola accentuato al focus */
+  box-shadow: 0 0 5px rgba(79, 70, 229, 0.5);
+}
+
+.categoria {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 320px;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.categoria label {
+  font-weight: 600;
+  color: #333;
+}
+
+.categoria select {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.categoria select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 5px rgba(79, 70, 229, 0.5);
+}
+
+.favourite-btn,
+.carrello-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+  transition: background-color 0.35s ease, box-shadow 0.35s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  gap: 0.5rem;
+  user-select: none;
+  margin: 5px;
+  margin-top: 10px;
+}
+
+.favourite-btn {
+  background: linear-gradient(135deg, #5c3ee8, #4338ca);
+  margin-right: 1.5rem;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.45);
+}
+
+.favourite-btn:hover {
+  background: linear-gradient(135deg, #4338ca, #3529a1);
+  box-shadow: 0 12px 28px rgba(67, 56, 202, 0.65);
+  transform: translateY(-3px);
+}
+
+.carrello-btn {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.45);
+}
+
+.carrello-btn:hover {
+  background: linear-gradient(135deg, #16a34a, #14532d);
+  box-shadow: 0 12px 28px rgba(20, 83, 45, 0.65);
+  transform: translateY(-3px);
+}
+
+.btn-cerca{
+  display: inline;
+  border-radius: 20px;
+  width: 100%;
+  height: 30px;
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: white;
+}
+
+.btn-cerca:hover{
+  background: linear-gradient(135deg, #4338ca, #3529a1);
+  box-shadow: 0 12px 28px rgba(67, 56, 202, 0.65);
+  transform: translateY(-3px);
+  color: white;
+}
+
+.annunci-nav-btn {
+  background: #4f46e5;
+  color: white;
+  padding: 0.7rem 1.4rem;
+  border: none;
+}
+
+.annunci-form-section {
+  background-color: #f9fafb;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  margin-top: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.annunci-form-section .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.annunci-form-section label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+  font-size: 1rem;
+}
+
+.annunci-form-section input,
+.annunci-form-section textarea,
+.annunci-form-section select {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.annunci-form-section input:focus,
+.annunci-form-section textarea:focus,
+.annunci-form-section select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 6px rgba(79, 70, 229, 0.4);
+}
+
+.annunci-form-section .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.annunci-form-section .form-row .form-group {
+  flex: 1;
+  min-width: 240px;
+}
+
+.annunci-form-section .submit-btn {
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  color: white;
+  padding: 0.9rem 1.8rem;
+  border: none;
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.35s, transform 0.2s, box-shadow 0.35s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.annunci-form-section .submit-btn:hover {
+  background: linear-gradient(135deg, #4338ca, #3529a1);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(67, 56, 202, 0.55);
 }

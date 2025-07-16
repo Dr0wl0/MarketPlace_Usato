@@ -1,1 +1,37 @@
-<p>annunci-preferiti works!</p>
+<div class="annunci-container">
+<header class="annunci-header">
+    <h1 class="annunci-title">
+      <span class="logo-icon">🛍️</span> ThriftGo!
+    </h1>
+</header>
+
+
+<main class="annunci-main-content">
+<section class="annunci-list-section">
+    <h2 class="section-title">
+        <i class="fas fa-tag"></i> Annunci Preferiti ⭐
+      </h2>
+      <div class="annuncio-footer">
+    <div *ngIf="favoriteAnnunci.length > 0; else noFavorites" class="annunci-grid">
+      <div *ngFor="let annuncio of favoriteAnnunci" class="annuncio-card">
+        <h3>{{annuncio.listingName}}</h3>
+        <p>{{annuncio.description}}</p>
+        <span class="price">€{{annuncio.price}}</span>
+        <br/>
+        <button class="favourite-btn" (click)="toggleFavourite(annuncio)"> ⭐ Rimuovi </button>
+        <br/>
+        <button class="btn btn-sm btn-outline-primary carrello-btn" (click)="addCarrello(annuncio)">
+                  Aggiungi al carrello
+                </button>
+      </div>
+    </div>
+    </div>
+  </section>
+</main>
+</div>
+
+
+    <ng-template #noFavorites>
+      <p>Non hai ancora annunci preferiti</p>
+    </ng-template>
+    

@@ -16,6 +16,9 @@ export class MostraListaComponent implements OnInit{
   annunci: Annuncio[] = [];
   categorie: Category[] = [];
   currentView: 'list' | 'form' = 'list';
+  searchTerm: string = '';
+  maxPrice: number | null = null;
+  annunciFiltrati: Annuncio[] = [];
 
   newAnnuncio: Partial<Annuncio> = {
     listingName: '',
@@ -58,9 +61,22 @@ export class MostraListaComponent implements OnInit{
 
   
   loadAnnuncio(): void {
-    this.listService.getAnnunci().subscribe((data) => {
-      this.annunci = data || [];
+    const userUuid = localStorage.getItem('userUuid');
+  if (!userUuid) return;
+
+  this.listService.getAnnunci().subscribe((annunci) => {
+    this.listService.getAnnunciByFavorite().subscribe((favAnnunci) => {
+      this.annunci = annunci.map(a => ({
+        ...a,
+        favourite: favAnnunci.some(fav => fav.uuid === a.uuid)
+
+        
+      }));
+      this.applyFilters();
+      this.annunciFiltrati = this.annunci;
+
     });
+  });
   }
 
   loadCategorie(): void {
@@ -70,9 +86,9 @@ export class MostraListaComponent implements OnInit{
       });
   }
 
-  get filteredAnnunci(): Annuncio[] {
-    if (!this.selectedCategory) return this.annunci;
-    return this.annunci.filter(a => a.categoryName === this.selectedCategory);
+  get filteredByCategory(): Annuncio[] {
+  if (!this.selectedCategory) return this.annunci;
+  return this.annunci.filter(a => a.categoryName === this.selectedCategory);
   }
 
   publishAnnuncio(): void {
@@ -120,11 +136,9 @@ export class MostraListaComponent implements OnInit{
   }
 
   this.listService.updateFavouriteStatus(userUuid, annuncio.uuid).subscribe({
-    next: (updatedAnnuncio) => {
+    next: () => {
     
       annuncio.favourite = !annuncio.favourite;
-    
-      console.log('Stato preferito aggiornato:', annuncio);
     },
     error: (err) => {
       console.error('Errore:', err);
@@ -133,7 +147,48 @@ export class MostraListaComponent implements OnInit{
   });
 }
 
+applyFilters(): void {
+  this.annunciFiltrati = this.annunci.filter(a => {
+    const matchesCategory = !this.selectedCategory || a.categoryName === this.selectedCategory;
+    const matchesSearch = !this.searchTerm || a.listingName.toLowerCase().includes(this.searchTerm.toLowerCase());
+    const matchesPrice = !this.maxPrice || a.price <= this.maxPrice;
+    return matchesCategory && matchesSearch && matchesPrice;
+  });
+  }
+
   addCarrello(annuncio: Annuncio): void {
     
+  }
+
+  filtraPerNome(): void {
+     if (!this.searchTerm || this.searchTerm.trim() === '') {
+    return;
+  }
+
+  this.listService.filtraPerNome(this.searchTerm).subscribe({
+    next: (annunciFiltrati) => {
+      console.log('Annunci filtrati ricevuti:', annunciFiltrati);
+      this.annunciFiltrati = annunciFiltrati;
+    },
+    error: (err) => {
+      console.error('Errore nella ricerca:', err);
+    }
+  });
+  }
+
+  filtraPerPrezzo(): void {
+    if (!this.maxPrice || this.maxPrice === null) {
+      return;
+    }
+
+    this.listService.filtraPerPrezzo(this.maxPrice).subscribe({
+      next: (annunciFiltrati) => {
+        this.annunciFiltrati = annunciFiltrati;
+      },
+
+      error: (err) => {
+      console.error('Errore nella ricerca:', err);
+    }
+    })
   }
 }

@@ -47,6 +47,18 @@ export class ListService {
       return throwError(() => error);
     })
   );
-}
+  }
+
+  filtraPerNome(listingName: string): Observable<Annuncio[]> {
+    return this.http.get<Annuncio[]>(`${this.apiUrl}/search/${listingName}`);
+  }
+
+  filtraPerPrezzo( prezzoMax: number ): Observable<Annuncio[]>{
+    return this.http.get<Annuncio[]>(`${this.apiUrl}/search/price/${prezzoMax}`)
+  }
+
+  eliminaAnnuncioDiUser( uuid: string ): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${uuid}`)
+  }
 
 }

@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { ListService } from '../../services/list.service';
 import { Annuncio } from '../../models/annuncio';
 import { RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profilo',
@@ -15,6 +16,7 @@ import { RouterLink } from '@angular/router';
 export class ProfiloComponent {
   userAnnunci: Annuncio[] = [];
   favoriteAnnunci: Annuncio[] = [];
+  annunciFiltrati: Annuncio[] = [];
 
   constructor(
     public authService: AuthService,
@@ -39,6 +41,19 @@ export class ProfiloComponent {
     this.listService.getAnnunciByFavorite().subscribe(annunci => {
       this.favoriteAnnunci = annunci;
     });
+  }
+  
+
+  eliminaAnnuncioDiUser(uuid: string): void {
+    this.listService.eliminaAnnuncioDiUser(uuid).subscribe({
+      next: () => {
+        this.userAnnunci = this.userAnnunci.filter(a => a.uuid != uuid);
+      },
+
+      error: (err) => {
+      console.error('Errore durante l\'eliminazione:', err);
+    }
+    })
   }
 
 }

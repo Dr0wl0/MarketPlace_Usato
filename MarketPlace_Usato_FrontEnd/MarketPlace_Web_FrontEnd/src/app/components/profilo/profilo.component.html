@@ -18,6 +18,11 @@
         <h3>{{annuncio.listingName}}</h3>
         <p>{{annuncio.description}}</p>
         <span class="price">€{{annuncio.price}}</span>
+        <br/>
+        <br/>
+        <button class="bottoneElimina" (click)="eliminaAnnuncioDiUser(annuncio.uuid)">
+          Delete
+      </button>
       </div>
     </div>
     <ng-template #noAnnunci>

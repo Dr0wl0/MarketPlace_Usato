@@ -4,98 +4,121 @@
       <span class="logo-icon">🛍️</span> ThriftGo!
     </h1>
 
-    <nav class="annunci-nav">
-      <button class="annunci-nav-btn" (click)="currentView = 'list'">
+    <nav class="annunci-nav mb-3">
+      <button class="btn btn-outline-primary me-2" (click)="currentView = 'list'">
         <i class="fas fa-list"></i> Visualizza annunci
       </button>
-      <button class="annunci-nav-btn" (click)="currentView = 'form'">
+      <button class="btn btn-outline-success" (click)="currentView = 'form'">
         <i class="fas fa-plus-circle"></i> Nuovo annuncio
       </button>
     </nav>
 
-    <div class="annunci-filters">
-        <div class="filter-group">
-          <label><i class="fas fa-filter"></i> Filtra per categoria</label>
-          <select [(ngModel)]="selectedCategory">
-            <option [ngValue]="null">Tutte le categorie</option>
-            <option *ngFor="let cat of categorie" [ngValue]="cat.name">
-              {{ cat.name }}
-            </option>
-          </select>
-        </div>
+    
+    <div class="annunci-filters mb-3 d-flex flex-wrap gap-3 align-items-end">
+
+   
+      <div class="cerca">
+        <label for="searchInput" class="form-label"><i class="fas fa-search"></i> Cerca </label>
+        <input (click)="filtraPerNome()" id="searchInput" type="text" class="form-control" placeholder="Cerca per nome annuncio..."
+          [(ngModel)]="searchTerm" (ngModelChange)="applyFilters()" />
       </div>
 
+
+      <div class="filter-group categoria">
+        <label for="categorySelect" class="form-label"><i class="fas fa-filter"></i> Filtra per categoria</label>
+        <select id="categorySelect" class="form-select" [(ngModel)]="selectedCategory" (change)="applyFilters()">
+          <option [ngValue]="null">Tutte le categorie</option>
+          <option *ngFor="let cat of categorie" [ngValue]="cat.name">
+            {{ cat.name }}
+          </option>
+        </select>
+      </div>
+
+  
+      <div class="prezzo" style="min-width: 180px;">
+        <label for="maxPriceInput" class="form-label"><i class="fas fa-euro-sign"></i> Prezzo massimo</label>
+        <input (click)="filtraPerPrezzo()" id="maxPriceInput" type="number" min="0" class="form-control" placeholder="Es. 100"
+          [(ngModel)]="maxPrice" (ngModelChange)="applyFilters()" />
+      </div>
+    </div>
   </header>
 
   <main class="annunci-main-content">
-    <!-- LISTA -->
     <section *ngIf="currentView === 'list'" class="annunci-list-section">
       <h2 class="section-title">
         <i class="fas fa-tag"></i> Lista Annunci
       </h2>
 
-      <div *ngIf="filteredAnnunci.length > 0; else noAnnunci" class="annunci-grid">
-        <article *ngFor="let annuncio of filteredAnnunci" class="annuncio-card" [class.favorite]="annuncio.favourite">
-          <div class="card-badge">{{ annuncio.categoryName }}</div>
-          <h3>{{ annuncio.listingName }}</h3>
-          <p class="annuncio-description">{{ annuncio.description }}</p>
-          <div class="annuncio-footer">
-            <span class="price">€{{ annuncio.price }}</span>
-            <button class="favourite-btn" (click)="toggleFavourite(annuncio)">
-              {{ annuncio.favourite ? '⭐ Preferito' : '☆ Aggiungi' }}
-            </button>
-            <button class="carrello-btn" (click)="addCarrello(annuncio)">
-              {{  'Aggiungi al carrello' }}
-            </button>
+      <div *ngIf="annunciFiltrati.length > 0; else noAnnunci" class="annunci-grid row row-cols-1 row-cols-md-3 g-3">
+        <article *ngFor="let annuncio of annunciFiltrati" class="annuncio-card col" [class.favorite]="annuncio.favourite">
+          <div class="card h-100">
+            <div class="card-header card-badge">{{ annuncio.categoryName }}</div>
+            <div class="card-body">
+              <h3 class="card-title">{{ annuncio.listingName }}</h3>
+              <p class="card-text annuncio-description">{{ annuncio.description }}</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <span class="price fw-bold">€{{ annuncio.price }}</span>
+              <div>
+                <button class="btn btn-sm btn-outline-warning me-2 favourite-btn" (click)="toggleFavourite(annuncio)">
+                  {{ annuncio.favourite ? '⭐ Rimuovi' : '⭐ Aggiungi' }}
+                </button>
+                <button class="btn btn-sm btn-outline-primary carrello-btn" (click)="addCarrello(annuncio)">
+                  Aggiungi al carrello
+                </button>
+              </div>
+            </div>
           </div>
         </article>
       </div>
 
       <ng-template #noAnnunci>
-        <div class="no-annunci">
-          <i class="fas fa-search"></i>
+        <div class="no-annunci text-center my-5">
+          <i class="fas fa-search fa-3x mb-3"></i>
           <p>Nessun annuncio disponibile</p>
         </div>
       </ng-template>
     </section>
 
     <!-- FORM -->
-    <section *ngIf="currentView === 'form'" class="annunci-form-section">
-      <h2 class="section-title">
-        <i class="fas fa-plus-circle"></i> Nuovo Annuncio
-      </h2>
+      <section *ngIf="currentView === 'form'" class="annunci-form-section">
+        <h2 class="section-title">
+          <i class="fas fa-plus-circle"></i> Nuovo Annuncio
+        </h2>
+
+        <div class="form-group">
+            <label><i class="fas fa-heading"></i> Nome annuncio</label>
+            <input type="text" [(ngModel)]="newAnnuncio.listingName" name="listingName" required />
+          </div>
+
+          <div class="form-group">
+            <label><i class="fas fa-align-left"></i> Descrizione</label>
+            <textarea [(ngModel)]="newAnnuncio.description" name="description" rows="4" required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label><i class="fas fa-euro-sign"></i> Prezzo (€)</label>
+              <input type="number" [(ngModel)]="newAnnuncio.price" name="price" required min="0" />
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-tags"></i> Categoria</label>
+              <select [(ngModel)]="newAnnuncio.categoryName" name="categoryName" required>
+                <option [ngValue]="''" disabled selected>Seleziona categoria</option>
+                <option *ngFor="let cat of categorie" [ngValue]="cat.name">
+                  {{ cat.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" class="submit-btn" (click)="publishAnnuncio()">
+            <i class="fas fa-paper-plane"></i> Pubblica Annuncio
+          </button>
 
       <form class="new-annuncio-form" novalidate>
-        <div class="form-group">
-          <label><i class="fas fa-heading"></i> Nome annuncio</label>
-          <input type="text" [(ngModel)]="newAnnuncio.listingName" name="listingName" required />
-        </div>
-
-        <div class="form-group">
-          <label><i class="fas fa-align-left"></i> Descrizione</label>
-          <textarea [(ngModel)]="newAnnuncio.description" name="description" rows="4" required></textarea>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label><i class="fas fa-euro-sign"></i> Prezzo (€)</label>
-            <input type="number" [(ngModel)]="newAnnuncio.price" name="price" required min="0" />
-          </div>
-
-          <div class="form-group">
-            <label><i class="fas fa-tags"></i> Categoria</label>
-            <select [(ngModel)]="newAnnuncio.categoryName" name="categoryName" required>
-              <option [ngValue]="''" disabled selected>Seleziona categoria</option>
-              <option *ngFor="let cat of categorie" [ngValue]="cat.name">
-                {{ cat.name }}
-              </option>
-            </select>
-          </div>
-        </div>
-
-        <button type="button" class="submit-btn" (click)="publishAnnuncio()">
-          <i class="fas fa-paper-plane"></i> Pubblica Annuncio
-        </button>
+        <!-- (resto form invariato) -->
       </form>
     </section>
   </main>

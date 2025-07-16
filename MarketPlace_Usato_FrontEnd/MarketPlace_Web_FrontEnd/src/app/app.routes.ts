@@ -5,13 +5,15 @@ import { MostraListaComponent } from './components/mostra-lista/mostra-lista.com
 import { ProfiloComponent } from './components/profilo/profilo.component';
 import { authGuard } from './auth.guard';
 import { CambiaCredenzialiComponent } from './components/cambia-credenziali/cambia-credenziali.component';
+import { AnnunciPreferitiComponent } from './components/annunci-preferiti/annunci-preferiti.component';
+import { AnnunciPropriComponent } from './components/annunci-propri/annunci-propri.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent,data: { hideNavbar: true }  },
   { path: 'register', component: RegisterComponent,data: { hideNavbar: true }  },
   { path: 'annunci', component: MostraListaComponent},
- // { path: 'favoriti'},
- // { path: 'annunci-propri'},
+  { path: 'annunci-propi', component: AnnunciPropriComponent},
+  { path: 'preferiti', component: AnnunciPreferitiComponent},
  { 
     path: 'profilo', 
     component: ProfiloComponent,
