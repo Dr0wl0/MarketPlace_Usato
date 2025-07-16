@@ -1,6 +1,7 @@
 package it.profice.corso.LogIn_Registration_service.service;
 
 import it.profice.corso.LogIn_Registration_service.dto.UserDTO;
+import it.profice.corso.LogIn_Registration_service.dto.UserDtoUpdate;
 import it.profice.corso.LogIn_Registration_service.exception.UserAlredyExistingException;
 import it.profice.corso.LogIn_Registration_service.exception.UserNotFoundException;
 import it.profice.corso.LogIn_Registration_service.model.User;
@@ -28,11 +29,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO update(String uuid,UserDTO userDTO) {
+    public UserDTO update(String uuid, UserDtoUpdate userDtoToUpdate) {
         User userToUpdate = userRepository.findByUuid( uuid ).orElseThrow(UserNotFoundException::new);
-        userToUpdate.setPassword(userDTO.getPassword());
-        userToUpdate.setUsername(userDTO.getUsername());
-        userToUpdate.setEmail(userDTO.getEmail());
+        userToUpdate.setPassword(userDtoToUpdate.getPassword());
+        userToUpdate.setUsername(userDtoToUpdate.getUsername());
         return modelToDto(userRepository.save(userToUpdate));
     }
 
@@ -60,21 +60,6 @@ public class UserServiceImpl implements UserService {
         return modelToDto(userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new));
     }
 
-    @Override
-    public UserDTO log(UserDTO userDTO) {
-        if(!userDTO.getIsLogged()){
-            userDTO.setIsLogged(true);
-        }
-        return userDTO;
-    }
-
-    @Override
-    public UserDTO logOut(UserDTO userDTO) {
-        if(userDTO.getIsLogged()){
-            userDTO.setIsLogged(false);
-        }
-        return userDTO;
-    }
 
     public UserDTO modelToDto(User user){
         return UserDTO.builder()
@@ -82,7 +67,6 @@ public class UserServiceImpl implements UserService {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .email(user.getEmail())
-                .isLogged(user.getIsLogged())
                 .build();
     }
 
@@ -92,7 +76,6 @@ public class UserServiceImpl implements UserService {
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .email(userDto.getEmail())
-                .isLogged(userDto.getIsLogged())
                 .build();
     }
 
