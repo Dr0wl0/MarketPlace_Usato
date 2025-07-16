@@ -44,6 +44,9 @@
             <button class="favourite-btn" (click)="toggleFavourite(annuncio)">
               {{ annuncio.favourite ? '⭐ Preferito' : '☆ Aggiungi' }}
             </button>
+            <button class="carrello-btn" (click)="addCarrello(annuncio)">
+              {{  'Aggiungi al carrello' }}
+            </button>
           </div>
         </article>
       </div>

@@ -119,4 +119,8 @@ export class MostraListaComponent implements OnInit {
       }
     });
   }
+
+  addCarrello(annuncio: Annuncio): void {
+    
+  }
 }
