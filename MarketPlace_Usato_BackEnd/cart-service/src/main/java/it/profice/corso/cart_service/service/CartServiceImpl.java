@@ -2,6 +2,7 @@ package it.profice.corso.cart_service.service;
 
 import it.profice.corso.cart_service.DTO.CartDTO;
 import it.profice.corso.cart_service.DTO.CartItemDTO;
+import it.profice.corso.cart_service.exception.CartAlreadyCreated;
 import it.profice.corso.cart_service.exception.CartNotFound;
 import it.profice.corso.cart_service.model.Cart;
 import it.profice.corso.cart_service.model.CartItem;
@@ -21,10 +22,17 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public CartDTO createCart(String userUuid) {
-        CartDTO cart = new CartDTO();
-        cart.setUuid(UUID.randomUUID().toString());
-        cart.setUserUuid(userUuid);
-        return modelToDto(cartRepository.save(dtoToModel(cart)));
+        String userUuidFind = cartRepository.findUserUuid(userUuid);
+        if(userUuidFind == null){
+            CartDTO cart = new CartDTO();
+            cart.setUuid(UUID.randomUUID().toString());
+            cart.setUserUuid(userUuid);
+            cart.setTot(0D);
+            return modelToDto(cartRepository.save(dtoToModel(cart)));
+        }else {
+            throw new CartAlreadyCreated();
+        }
+
     }
 
     @Override
