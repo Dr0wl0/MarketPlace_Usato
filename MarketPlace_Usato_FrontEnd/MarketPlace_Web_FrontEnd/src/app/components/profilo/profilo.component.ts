@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ListService } from '../../services/list.service';
 import { Annuncio } from '../../models/annuncio';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profilo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './profilo.component.html',
   styleUrls: ['./profilo.component.css']
 })

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './mostra-lista.component.html',
   styleUrl: './mostra-lista.component.css'
 })
-export class MostraListaComponent implements OnInit {
+export class MostraListaComponent implements OnInit{
   annunci: Annuncio[] = [];
   categorie: Category[] = [];
   currentView: 'list' | 'form' = 'list';
@@ -43,17 +43,20 @@ export class MostraListaComponent implements OnInit {
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
+  
   ngOnInit(): void {
-  if (!localStorage.getItem('userUuid')) {
+    /*
+    if (!localStorage.getItem('userUuid')) {
     this.router.navigate(['/login']);
     return;
   }
-  
+  */
   this.loadAnnuncio();
   this.loadCategorie();
 }
 
+
+  
   loadAnnuncio(): void {
     this.listService.getAnnunci().subscribe((data) => {
       this.annunci = data || [];
