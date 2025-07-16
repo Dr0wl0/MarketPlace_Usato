@@ -3,7 +3,7 @@
     <h1 class="annunci-title">
       <span class="logo-icon">🛍️</span> ThriftGo!
     </h1>
-    
+
     <nav class="annunci-nav">
       <button class="annunci-nav-btn" (click)="currentView = 'list'">
         <i class="fas fa-list"></i> Visualizza annunci
@@ -11,44 +11,32 @@
       <button class="annunci-nav-btn" (click)="currentView = 'form'">
         <i class="fas fa-plus-circle"></i> Nuovo annuncio
       </button>
-      <button class="annunci-nav-btn">
-        <i class="fas fa-star"></i> Preferiti
-      </button>
     </nav>
-  </header>
 
-  <main class="annunci-main-content">
-    <!-- Vista Lista Annunci -->
-    <section *ngIf="currentView === 'list'" class="annunci-list-section">
-      <h2 class="section-title">
-        <i class="fas fa-tag"></i> Lista Annunci
-      </h2>
-      
-      <div class="annunci-filters">
-        <div class="filter-group">
-          <label><i class="fas fa-euro-sign"></i> Range di prezzo</label>
-          <input type="range" class="price-filter">
-          <div class="price-labels">
-            <span>€0</span>
-            <span>€50</span>
-            <span>€100+</span>
-          </div>
-        </div>
-        
+    <div class="annunci-filters">
         <div class="filter-group">
           <label><i class="fas fa-filter"></i> Filtra per categoria</label>
           <select [(ngModel)]="selectedCategory">
             <option [ngValue]="null">Tutte le categorie</option>
-            <option *ngFor="let cat of (categoryLabels | keyvalue)" [ngValue]="cat.key">
-              {{ cat.value }}
+            <option *ngFor="let cat of categorie" [ngValue]="cat.name">
+              {{ cat.name }}
             </option>
           </select>
         </div>
       </div>
 
+  </header>
+
+  <main class="annunci-main-content">
+    <!-- LISTA -->
+    <section *ngIf="currentView === 'list'" class="annunci-list-section">
+      <h2 class="section-title">
+        <i class="fas fa-tag"></i> Lista Annunci
+      </h2>
+
       <div *ngIf="filteredAnnunci.length > 0; else noAnnunci" class="annunci-grid">
         <article *ngFor="let annuncio of filteredAnnunci" class="annuncio-card" [class.favorite]="annuncio.favourite">
-          <div class="card-badge">{{ getCategoryLabel(annuncio.category) }}</div>
+          <div class="card-badge">{{ annuncio.categoryName }}</div>
           <h3>{{ annuncio.listingName }}</h3>
           <p class="annuncio-description">{{ annuncio.description }}</p>
           <div class="annuncio-footer">
@@ -68,35 +56,35 @@
       </ng-template>
     </section>
 
-    <!-- Vista Nuovo Annuncio -->
+    <!-- FORM -->
     <section *ngIf="currentView === 'form'" class="annunci-form-section">
       <h2 class="section-title">
         <i class="fas fa-plus-circle"></i> Nuovo Annuncio
       </h2>
-      
-      <form class="new-annuncio-form">
+
+      <form class="new-annuncio-form" novalidate>
         <div class="form-group">
           <label><i class="fas fa-heading"></i> Nome annuncio</label>
-          <input type="text" [(ngModel)]="newAnnuncio.listingName" name="listingName" placeholder="Es. iPhone 12 usato">
+          <input type="text" [(ngModel)]="newAnnuncio.listingName" name="listingName" required />
         </div>
 
         <div class="form-group">
           <label><i class="fas fa-align-left"></i> Descrizione</label>
-          <textarea [(ngModel)]="newAnnuncio.description" name="description" rows="4" 
-                    placeholder="Descrivi l'articolo in dettaglio..."></textarea>
+          <textarea [(ngModel)]="newAnnuncio.description" name="description" rows="4" required></textarea>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label><i class="fas fa-euro-sign"></i> Prezzo (€)</label>
-            <input type="number" [(ngModel)]="newAnnuncio.price" name="price" placeholder="0">
+            <input type="number" [(ngModel)]="newAnnuncio.price" name="price" required min="0" />
           </div>
 
           <div class="form-group">
             <label><i class="fas fa-tags"></i> Categoria</label>
-            <select [(ngModel)]="newAnnuncio.category" name="category">
-              <option *ngFor="let categoryKey of (categoryLabels | keyvalue)" [value]="categoryKey.key">
-                {{ categoryKey.value }}
+            <select [(ngModel)]="newAnnuncio.categoryName" name="categoryName" required>
+              <option [ngValue]="''" disabled selected>Seleziona categoria</option>
+              <option *ngFor="let cat of categorie" [ngValue]="cat.name">
+                {{ cat.name }}
               </option>
             </select>
           </div>

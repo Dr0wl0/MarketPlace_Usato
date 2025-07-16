@@ -1,0 +1,39 @@
+<div class="profile-container">
+  <h1>Profilo di {{authService.currentUserName$ | async}}</h1>
+
+  <section class="profile-section">
+    <h2>Informazioni personali</h2>
+    <div class="profile-info">
+      <p><strong>Nome:</strong> {{authService.currentUserName$ | async}}</p>
+      <button routerLink="/cambia-credenziali" class="edit-btn">Cambia credenziali</button>
+    </div>
+  </section>
+
+  <section class="profile-section">
+    <h2>I miei annunci</h2>
+    <div *ngIf="userAnnunci.length > 0; else noAnnunci" class="annunci-grid">
+      <div *ngFor="let annuncio of userAnnunci" class="annuncio-card">
+        <h3>{{annuncio.listingName}}</h3>
+        <p>{{annuncio.description}}</p>
+        <span class="price">€{{annuncio.price}}</span>
+      </div>
+    </div>
+    <ng-template #noAnnunci>
+      <p>Non hai ancora pubblicato annunci</p>
+    </ng-template>
+  </section>
+
+  <section class="profile-section">
+    <h2>Annunci preferiti</h2>
+    <div *ngIf="favoriteAnnunci.length > 0; else noFavorites" class="annunci-grid">
+      <div *ngFor="let annuncio of favoriteAnnunci" class="annuncio-card">
+        <h3>{{annuncio.listingName}}</h3>
+        <p>{{annuncio.description}}</p>
+        <span class="price">€{{annuncio.price}}</span>
+      </div>
+    </div>
+    <ng-template #noFavorites>
+      <p>Non hai ancora annunci preferiti</p>
+    </ng-template>
+  </section>
+</div>
