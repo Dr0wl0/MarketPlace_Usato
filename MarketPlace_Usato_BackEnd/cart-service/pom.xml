@@ -8,11 +8,11 @@
 		<version>3.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>it.profis.corso</groupId>
-	<artifactId>favorite-service</artifactId>
+	<groupId>it.profice.corso</groupId>
+	<artifactId>cart-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>favorite-service</name>
-	<description>Demo project for Spring Boot</description>
+	<name>cart-service</name>
+	<description>service for market&apos;s cart</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -63,7 +63,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+        </dependency>
+    </dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

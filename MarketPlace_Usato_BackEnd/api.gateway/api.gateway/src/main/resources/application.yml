@@ -22,6 +22,10 @@ spring:
               uri: lb://listing-service
               predicates:
                 - Path=/api/v1/category/**
+            - id: cart-service
+              uri: lb://cart-service
+              predicates:
+                - Path=/api/v1/cart/**
           globalcors:
             cors-configurations:
               '[/**]':
