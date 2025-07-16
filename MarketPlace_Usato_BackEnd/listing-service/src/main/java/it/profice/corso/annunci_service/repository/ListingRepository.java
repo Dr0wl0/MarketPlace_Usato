@@ -24,4 +24,10 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     @Query(value = "SELECT * FROM Listing l WHERE l.price BETWEEN 0.0 AND :price", nativeQuery = true)
     List<Listing> findByPrice( Double price );
 
+    List<Listing> findByUserUuid(String userUuid);
+
+    @Query(value = "SELECT * FROM Listing l WHERE l.favorite = true", nativeQuery = true)
+    List<Listing> findByFavorite();
+
+
 }

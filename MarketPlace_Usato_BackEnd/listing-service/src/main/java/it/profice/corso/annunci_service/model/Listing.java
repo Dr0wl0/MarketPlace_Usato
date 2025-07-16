@@ -17,6 +17,7 @@ public class Listing {
     private Long id;
 
     private String uuid;
+    private String userUuidFav;
     private String userUuid;
     private String listingName;
     private String sellersName;

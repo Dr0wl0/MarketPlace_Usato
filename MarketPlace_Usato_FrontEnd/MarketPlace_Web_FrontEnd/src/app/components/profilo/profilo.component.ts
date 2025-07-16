@@ -36,8 +36,9 @@ export class ProfiloComponent {
   }
 
   loadFavoriteAnnunci(): void {
-    this.listService.getAnnunci().subscribe(annunci => {
-      this.favoriteAnnunci = annunci.filter(a => a.favourite);
+    this.listService.getAnnunciByFavorite().subscribe(annunci => {
+      this.favoriteAnnunci = annunci;
     });
   }
+
 }

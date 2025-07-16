@@ -10,6 +10,7 @@ import lombok.*;
 public class ListingDTO {
 
     private String uuid;
+    private String userUuidFav;
     private String userUuid;
     private String listingName;
     private String sellersName;
@@ -19,7 +20,4 @@ public class ListingDTO {
 
     private boolean favorite;
 
-    public void setFavourite() {
-        this.favorite = !this.favorite;
-    }
 }

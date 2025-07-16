@@ -13,8 +13,10 @@ public interface ListingService {
     List<ListingDTO> findByName ( String listingName );
     List<ListingDTO> findByCategory( String categoryName );
     List<ListingDTO> findByPrice( Double price );
+    List<ListingDTO> findByUserUuid(String userUuid);
+    List<ListingDTO> findByFavorite();
+    ListingDTO updateToFavorite(String uuid, String userUuidFav);
 
     void deleteByUuid( String uuid );
 
-    ResponseEntity<ListingDTO>  toggleFavourite(String uuid);
 }

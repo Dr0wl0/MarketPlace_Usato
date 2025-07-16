@@ -19,6 +19,26 @@ public class ListingController {
     @GetMapping
     public List<ListingDTO> findAll() { return listingService.findAll(); }
 
+    @GetMapping("/user/{userUuid}")
+    public List<ListingDTO> findByUserUuid(@PathVariable String userUuid){
+        return listingService.findByUserUuid(userUuid);
+    }
+
+    @GetMapping("/favorites")
+    public List<ListingDTO> findByFavorite(){
+        return listingService.findByFavorite();
+    }
+
+    @PatchMapping("/{userUuid}/{uuid}/favorite")
+    public ListingDTO setFavorite(@PathVariable String userUuid, @PathVariable String uuid){
+        return listingService.updateToFavorite(uuid,userUuid);
+    }
+
+    @GetMapping("/{uuid}/listing")
+    public ListingDTO findByUuid(@PathVariable String uuid){
+        return listingService.findByUuid(uuid);
+    }
+
     @PostMapping
     public ListingDTO save (@RequestBody ListingDTO listing ){
         return listingService.save( listing );
@@ -44,8 +64,4 @@ public class ListingController {
         listingService.deleteByUuid( uuid );
     }
 
-    @PutMapping("/{uuid}/favourite")
-    public ResponseEntity<ListingDTO> updateFavourite(@PathVariable String uuid)  {
-        return listingService.toggleFavourite(uuid);
-    }
 }

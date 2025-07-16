@@ -112,16 +112,26 @@ export class MostraListaComponent implements OnInit{
   }
 
   toggleFavourite(annuncio: Annuncio): void {
-    const newStatus = !annuncio.favourite;
-    this.listService.updateFavouriteStatus(annuncio.uuid, newStatus).subscribe({
-      next: (updatedAnnuncio) => {
-        annuncio.favourite = updatedAnnuncio.favourite;
-      },
-      error: () => {
-        alert('Errore nel modificare il preferito');
-      }
-    });
+  const userUuid = localStorage.getItem('userUuid');
+  
+  if (!userUuid) {
+    alert('Utente non autenticato!');
+    return;
   }
+
+  this.listService.updateFavouriteStatus(userUuid, annuncio.uuid).subscribe({
+    next: (updatedAnnuncio) => {
+    
+      annuncio.favourite = !annuncio.favourite;
+    
+      console.log('Stato preferito aggiornato:', annuncio);
+    },
+    error: (err) => {
+      console.error('Errore:', err);
+      alert('Errore durante l\'aggiornamento dei preferiti');
+    }
+  });
+}
 
   addCarrello(annuncio: Annuncio): void {
     

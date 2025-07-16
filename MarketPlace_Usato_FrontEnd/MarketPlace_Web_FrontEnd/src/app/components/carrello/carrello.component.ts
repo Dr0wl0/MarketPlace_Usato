@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { Annuncio } from '../../models/annuncio';
+import { CartItem } from '../../models/cartItem';
 
 @Component({
   selector: 'app-carrello',
@@ -13,16 +14,16 @@ export class CarrelloComponent {
 
   private router: Router = new Router;
   private cartService!: CartService;
-  private carrello: Annuncio[] = [];
-  private userID = localStorage.getItem('userUuid');
+  private carrello: CartItem[] = [];
+  private userUuid = localStorage.getItem('userUuid');
 
   ngOnInit(): void {
 
-    if (!this.userID) {
+    if (!this.userUuid) {
       this.router.navigate(['/login']);
       return;
     }
-    this.loadCarrello(this.userID);
+    this.loadCarrello(this.userUuid);
   } 
 
   private loadCarrello(uudi: string){

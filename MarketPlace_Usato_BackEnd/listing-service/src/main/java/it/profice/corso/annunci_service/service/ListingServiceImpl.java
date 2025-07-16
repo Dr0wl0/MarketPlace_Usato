@@ -75,24 +75,34 @@ public class ListingServiceImpl implements ListingService{
     }
 
     @Override
+    public List<ListingDTO> findByUserUuid(String userUuid) {
+        return listingRepository.findByUserUuid(userUuid).stream()
+                .map(this::modelToDto)
+                .toList();
+    }
+
+    @Override
+    public List<ListingDTO> findByFavorite() {
+        return listingRepository.findByFavorite().stream()
+                .map(this::modelToDto)
+                .toList();
+    }
+
+    @Override
+    public ListingDTO updateToFavorite(String uuid, String userUuidFav) {
+        Listing toSetFav = listingRepository.findByUuid(uuid).orElseThrow(ListingNotFoundException::new);
+        toSetFav.setFavorite(!toSetFav.isFavorite());
+        toSetFav.setUserUuidFav(userUuidFav);
+        return modelToDto(listingRepository.save(toSetFav));
+    }
+
+    @Override
     public void deleteByUuid(String uuid) {
         Listing listingToDelete = listingRepository.findByUuid( uuid ).orElseThrow(ListingNotFoundException::new);
         listingRepository.deleteById(listingToDelete.getId());
     }
 
-    @Override
-    public ResponseEntity<ListingDTO> toggleFavourite(String uuid) {
-        {
-            ListingDTO listing = findByUuid(uuid);
 
-            if (listing != null) {
-                listing.setFavourite();
-                return ResponseEntity.ok(listing);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        }
-    }
 
     public ListingDTO modelToDto(Listing listing){
         return ListingDTO.builder()
