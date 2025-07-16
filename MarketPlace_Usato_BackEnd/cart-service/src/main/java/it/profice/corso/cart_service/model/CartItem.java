@@ -17,7 +17,7 @@ public class CartItem {
 
     private String uuid;
     private String listingUuid;
-    private int quantity;
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")

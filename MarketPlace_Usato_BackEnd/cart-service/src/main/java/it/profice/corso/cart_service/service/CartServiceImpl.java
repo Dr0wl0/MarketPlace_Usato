@@ -42,29 +42,30 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void addItem(String cartUuid, CartItemDTO item) {
-        CartDTO cart = modelToDto(cartRepository.findByUuid(cartUuid).orElseThrow(CartNotFound::new));
+        Cart cart = cartRepository.findByUuid(cartUuid).orElseThrow(CartNotFound::new);
 
-        CartItem cartItem = itemDtoToModel(item, dtoToModel(cart));
+        CartItem cartItem = itemDtoToModel(item, cart);
+        cartItem.setUuid(UUID.randomUUID().toString());
         cart.getItems().add(cartItem);
 
-        modelToDto(cartRepository.save(dtoToModel(cart)));
+        cartRepository.save(cart);
 
     }
 
     @Override
     public void removeitem(String cartUuid, String listingUuid) {
-        CartDTO cart = modelToDto(cartRepository.findByUuid(cartUuid).orElseThrow(CartNotFound::new));
+        Cart cart = cartRepository.findByUuid(cartUuid).orElseThrow(CartNotFound::new);
 
         cart.getItems().removeIf(i -> i.getListingUuid().equals(listingUuid));
-        modelToDto(cartRepository.save(dtoToModel(cart)));
+        cartRepository.save(cart);
     }
 
     @Override
     public void clearCart(String cartUuid) {
-        CartDTO cart = modelToDto(cartRepository.findByUuid(cartUuid).orElseThrow(CartNotFound::new));
+        Cart cart = cartRepository.findByUuid(cartUuid).orElseThrow(CartNotFound::new);
 
         cart.getItems().clear();
-        modelToDto(cartRepository.save(dtoToModel(cart)));
+        cartRepository.save(cart);
     }
 
     public CartDTO modelToDto(Cart cart){
