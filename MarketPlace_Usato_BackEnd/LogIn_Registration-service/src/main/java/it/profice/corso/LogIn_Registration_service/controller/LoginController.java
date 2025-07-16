@@ -1,6 +1,7 @@
 package it.profice.corso.LogIn_Registration_service.controller;
 
 import it.profice.corso.LogIn_Registration_service.dto.UserDTO;
+import it.profice.corso.LogIn_Registration_service.dto.UserDtoUpdate;
 import it.profice.corso.LogIn_Registration_service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,8 +44,8 @@ public class LoginController {
 
     @PatchMapping("/{uuid}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public UserDTO update(@PathVariable String uuid, @RequestBody UserDTO userDTO){
-        return userService.update(uuid, userDTO);
+    public UserDTO update(@PathVariable String uuid, @RequestBody UserDtoUpdate userDtoToUpdate){
+        return userService.update(uuid, userDtoToUpdate);
     }
 
     @DeleteMapping

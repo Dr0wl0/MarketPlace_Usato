@@ -27,14 +27,23 @@ export class CambiaCredenzialiComponent {
   }
 
   onSubmit(): void {
-    if (this.credentialsForm.valid) {
-      // Qui implementerai la chiamata API per cambiare le credenziali
-      const newUsername = this.credentialsForm.value.newUsername;
-      if (newUsername) {
-        this.authService.updateUserName(newUsername);
-      }
-      
-      this.router.navigate(['/profilo']);
+  if (this.credentialsForm.valid) {
+    const { newUsername, newPassword, confirmPassword } = this.credentialsForm.value;
+
+    if (newPassword && newPassword !== confirmPassword) {
+      alert('Le password non coincidono!');
+      return;
+    }
+
+    // Aggiorna credenziali 
+    if (newUsername && newPassword) {
+      this.authService.updateUser(newUsername,newPassword).subscribe({
+        next: () => alert('Credenziali aggiornate con successo!!'),
+        error: (err) => alert('Errore durante l\'aggiornamento delle credenziali: ' + err.message)
+      });
+    }
+    
+    this.router.navigate(['/profilo']);
     }
   }
 }
