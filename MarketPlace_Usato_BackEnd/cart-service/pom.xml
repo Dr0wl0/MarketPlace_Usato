@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>it.profice.corso</groupId>
-	<artifactId>LogIn_Registration-service</artifactId>
+	<artifactId>cart-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>LogIn_Registration-service</name>
-	<description>Service per la registrazione utente e login</description>
+	<name>cart-service</name>
+	<description>service for market&apos;s cart</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -32,10 +32,6 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
@@ -46,6 +42,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 
 		<dependency>
@@ -68,7 +68,6 @@
             <artifactId>spring-webflux</artifactId>
         </dependency>
     </dependencies>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

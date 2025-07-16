@@ -10,7 +10,7 @@
         <module name="discovery-server" />
         <module name="api.gateway" />
       </profile>
-      <profile name="Annotation profile for listing-service" enabled="true">
+      <profile name="Annotation profile for LogIn_Registration-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -18,16 +18,8 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="listing-service" />
-      </profile>
-      <profile name="Annotation profile for LogIn_Registration-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-        </processorPath>
         <module name="LogIn_Registration-service" />
+        <module name="cart-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -35,6 +27,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="LogIn_Registration-service" options="-parameters" />
       <module name="api.gateway" options="-parameters" />
+      <module name="cart-service" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="listing-service" options="-parameters" />
     </option>
