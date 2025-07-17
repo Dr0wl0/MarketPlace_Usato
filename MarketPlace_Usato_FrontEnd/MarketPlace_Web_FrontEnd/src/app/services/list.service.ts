@@ -61,4 +61,13 @@ export class ListService {
     return this.http.delete<void>(`${this.apiUrl}/${uuid}`)
   }
 
+  getAnnuncioByUuid(uuid: string): Observable<Annuncio> {
+  return this.http.get<Annuncio>(`${this.apiUrl}/${uuid}/listing`).pipe(
+    catchError(error => {
+      console.error('Error fetching listing:', error);
+      return throwError(() => error);
+    })
+  );
+}
+
 }

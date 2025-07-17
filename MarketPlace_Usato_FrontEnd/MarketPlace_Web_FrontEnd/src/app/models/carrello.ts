@@ -3,6 +3,6 @@ import { CartItem } from "./cartItem";
 export interface Carrello {
   uuid: string;
   userUuid: string;
-  item: CartItem[];
+  items: CartItem[];
   tot: number;
 }

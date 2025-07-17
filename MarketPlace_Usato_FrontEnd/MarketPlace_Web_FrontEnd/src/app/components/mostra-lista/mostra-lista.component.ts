@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../../models/categoria';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { CartItem } from '../../models/cartItem';
+import { Carrello } from '../../models/carrello';
 @Component({
   selector: 'app-post-list',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './mostra-lista.component.html',
   styleUrl: './mostra-lista.component.css'
 })
@@ -155,9 +157,45 @@ applyFilters(): void {
   });
   }
 
-  addCarrello(annuncio: Annuncio): void {
-    this.cartService.getCarrello(annuncio.uuid);
+addCarrello(annuncio: Annuncio): void {
+  const userUuid = localStorage.getItem('userUuid');
+  if (!userUuid) {
+    alert('Utente non autenticato');
+    return;
   }
+
+  this.cartService.getCarrello(userUuid).subscribe({
+    next: (carrello) => {
+      const cartItem: CartItem = {
+        listingUuid: annuncio.uuid,
+        quantity: 1,
+
+        uuid: '',
+        userUuid: '',
+        listingName: '',
+        description: '',
+        categoryName: '',
+        price: 0,
+        favourite: false
+      };
+      
+      this.cartService.addToCarrello(carrello.uuid, cartItem).subscribe({
+        next: () => {
+          alert('Annuncio aggiunto al carrello!');
+        },
+        error: (err) => {
+          console.error('Errore durante l\'aggiunta al carrello:', err);
+          alert('Errore nel salvataggio del carrello');
+        }
+      });
+    },
+    error: (err) => {
+      console.error('Errore nel recupero del carrello:', err);
+      alert('Carrello non trovato');
+    }
+  });
+}
+
 
   filtraPerNome(): void {
      if (!this.searchTerm || this.searchTerm.trim() === '') {

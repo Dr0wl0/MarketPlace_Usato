@@ -1,11 +1,10 @@
-<div class="carrello-container" *ngIf="carrello && carrello.item.length; else emptyCart">
+<div class="carrello-container" *ngIf="carrello && carrello.items.length; else emptyCart">
   <h2>🛒 Il tuo carrello</h2>
 
-  <div class="carrello-item" *ngFor="let cartItem of carrello!.item">
+  <div class="carrello-item" *ngFor="let cartItem of carrello!.items">
     <div class="item-info">
-      <h3>{{ cartItem.listingName }}</h3>
-      <p>{{ cartItem.price }}</p>
-      <p>{{ cartItem.quantity }}</p>
+      <h3>{{ cartItem.listingUuid }}</h3>
+      <p>Quantità: {{ cartItem.quantity }}</p>
     </div>
     <button class="remove-btn" (click)="removeCarrello(cartItem)">Rimuovi</button>
   </div>

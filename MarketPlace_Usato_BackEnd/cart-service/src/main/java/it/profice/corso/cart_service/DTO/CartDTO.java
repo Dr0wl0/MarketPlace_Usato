@@ -20,7 +20,7 @@ public class CartDTO {
 
     private String uuid;
     private String userUuid;
-    private List<CartItem> items = new ArrayList<>();
+    private List<CartItemDTO> items = new ArrayList<>();
     private Double tot;
 
 }

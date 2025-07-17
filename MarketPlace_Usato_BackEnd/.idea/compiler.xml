@@ -10,7 +10,7 @@
         <module name="discovery-server" />
         <module name="api.gateway" />
       </profile>
-      <profile name="Annotation profile for LogIn_Registration-service" enabled="true">
+      <profile name="Annotation profile for listing-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

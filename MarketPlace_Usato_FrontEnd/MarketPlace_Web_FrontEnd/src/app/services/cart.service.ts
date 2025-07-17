@@ -17,7 +17,7 @@ export class CartService {
   }
 
   getCarrello(uuid: string): Observable<Carrello> {
-    return this.http.get<Carrello>(`${this.apiUrl}/${uuid}`);
+    return this.http.get<Carrello>(`${this.apiUrl}/${uuid}`, { responseType: 'json' });
   }
 
   addToCarrello(uuid: string, annuncio: CartItem): Observable<Carrello> {

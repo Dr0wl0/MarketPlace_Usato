@@ -1,5 +1,6 @@
 package it.profice.corso.cart_service.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -74,23 +75,41 @@ public class CartServiceImpl implements CartService{
         cartRepository.save(cart);
     }
 
-    public CartDTO modelToDto(Cart cart){
+    private CartDTO modelToDto(Cart cart) {
+        List<CartItemDTO> itemDTOs = cart.getItems().stream()
+            .map(item -> CartItemDTO.builder()
+                .uuid(item.getUuid())
+                .listingUuid(item.getListingUuid())
+                .quantity(item.getQuantity())
+                .build())
+            .toList();
+
         return CartDTO.builder()
-                .uuid(cart.getUuid())
-                .userUuid(cart.getUserUuid())
-                .items(cart.getItems())
-                .tot(cart.getTot())
-                .build();
+            .uuid(cart.getUuid())
+            .userUuid(cart.getUserUuid())
+            .items(itemDTOs)
+            .tot(cart.getTot())
+            .build();
     }
 
-    public Cart dtoToModel (CartDTO cartDTO){
+
+    public Cart dtoToModel(CartDTO cartDTO) {
+        List<CartItem> items = cartDTO.getItems().stream()
+            .map(itemDto -> CartItem.builder()
+                .uuid(itemDto.getUuid())
+                .listingUuid(itemDto.getListingUuid())
+                .quantity(itemDto.getQuantity())
+                .build())
+            .toList();
+
         return Cart.builder()
-                .uuid(cartDTO.getUuid())
-                .userUuid(cartDTO.getUserUuid())
-                .items(cartDTO.getItems())
-                .tot(cartDTO.getTot())
-                .build();
+            .uuid(cartDTO.getUuid())
+            .userUuid(cartDTO.getUserUuid())
+            .items(items)
+            .tot(cartDTO.getTot())
+            .build();
     }
+
 
     public CartItemDTO itemModelToDto(CartItem item){
         return CartItemDTO.builder()
@@ -109,5 +128,5 @@ public class CartServiceImpl implements CartService{
                 .build();
     }
 
-    
+
 }
