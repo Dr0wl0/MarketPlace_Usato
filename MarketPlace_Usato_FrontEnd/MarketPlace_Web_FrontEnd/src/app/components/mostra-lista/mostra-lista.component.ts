@@ -175,7 +175,6 @@ applyFilters(): void {
   this.cartService.addCarrello(userUuid, annuncio).subscribe({
     next: () => {
       alert('Oggetto aggiunto al carrello!');
-      // oppure aggiorna localmente (es. numero nel badge)
     },
     error: () => alert('Errore aggiungendo al carrello.')
   });
