@@ -74,10 +74,7 @@ export class MostraListaComponent implements OnInit{
 
   
   loadAnnuncio(): void {
-    const userUuid = localStorage.getItem('userUuid');
-  if (!userUuid) return;
-
-  this.listService.getAnnunci().subscribe((annunci) => {
+   this.listService.getAnnunci().subscribe((annunci) => {
     this.listService.getAnnunciByFavorite().subscribe((favAnnunci) => {
       this.annunci = annunci.map(a => ({
         ...a,
