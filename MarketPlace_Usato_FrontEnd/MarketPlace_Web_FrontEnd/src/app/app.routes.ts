@@ -8,6 +8,7 @@ import { CambiaCredenzialiComponent } from './components/cambia-credenziali/camb
 import { AnnunciPreferitiComponent } from './components/annunci-preferiti/annunci-preferiti.component';
 import { AnnunciPropriComponent } from './components/annunci-propri/annunci-propri.component';
 import { CarrelloComponent } from './components/carrello/carrello.component';
+import { AnnuncioDetailComponent } from './components/annuncio-detail/annuncio-detail.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent,data: { hideNavbar: true }  },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'annunci-propi', component: AnnunciPropriComponent},
   { path: 'preferiti', component: AnnunciPreferitiComponent},
   { path: 'carrello', component: CarrelloComponent},
+   { path: 'annuncio/:uuid', component: AnnuncioDetailComponent},
  { 
     path: 'profilo', 
     component: ProfiloComponent,
