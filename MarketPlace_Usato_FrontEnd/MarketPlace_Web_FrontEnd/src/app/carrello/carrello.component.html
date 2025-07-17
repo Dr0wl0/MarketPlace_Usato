@@ -1,0 +1,22 @@
+<div class="carrello-container" *ngIf="carrello && carrello.annunci.length > 0; else emptyCart">
+  <h2>🛒 Il tuo carrello</h2>
+
+  <div class="carrello-item" *ngFor="let annuncio of carrello.annunci">
+    <div class="item-info">
+      <h3>{{ annuncio.listingName }}</h3>
+      <p>{{ annuncio.description }}</p>
+      <p class="item-price">Prezzo: €{{ annuncio.price }}</p>
+    </div>
+    <button class="remove-btn" (click)="removeCarrello(annuncio)">Rimuovi</button>
+  </div>
+
+  <div class="carrello-footer">
+    <strong>Totale: €{{ carrello.tot.toFixed(2) }}</strong>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <div class="empty-cart">
+    <p>Il carrello è vuoto.</p>
+  </div>
+</ng-template>

@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../../models/categoria';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-post-list',
   imports: [CommonModule, FormsModule],
@@ -30,6 +31,7 @@ export class MostraListaComponent implements OnInit{
 
   constructor(
   private listService: ListService, 
+  private cartService: CartService,
   private http: HttpClient,
   private router: Router
 ) {}
@@ -51,6 +53,17 @@ export class MostraListaComponent implements OnInit{
     return;
   }
   */
+  const userUuid = localStorage.getItem('userUuid');
+  if (userUuid) {
+    this.cartService.getCarrello(userUuid).subscribe(carrello => {
+      console.log('Carrello caricato:', carrello);
+    }, err => {
+      console.warn('Carrello non trovato – lo creo');
+      this.cartService.createCarrello(userUuid).subscribe(newCarrello => {
+        console.log('Carrello creato:', newCarrello);
+      });
+    });
+  }
   this.loadAnnuncio();
   this.loadCategorie();
 }
