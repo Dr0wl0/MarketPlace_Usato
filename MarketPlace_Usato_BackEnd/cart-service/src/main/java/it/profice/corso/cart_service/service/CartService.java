@@ -6,6 +6,7 @@ import it.profice.corso.cart_service.DTO.CartItemDTO;
 public interface CartService {
 
     CartDTO createCart( String userUuid );
+    CartDTO findCartByUserUuid( String userUuid );
     CartDTO findCartByUuid( String uuid );
     void addItem( String cartUuid, CartItemDTO item );
     void removeitem( String cartUuid, String listingUuid );
