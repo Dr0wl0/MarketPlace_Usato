@@ -66,6 +66,11 @@
                 <button class="btn btn-sm btn-outline-primary carrello-btn" (click)="addCarrello(annuncio)">
                   Aggiungi al carrello
                 </button>
+                <div class="annuncio-footer">
+                  <a [routerLink]="['/annuncio', annuncio.uuid]" class="btn-dettagli">
+                    Dettagli
+                  </a>
+                </div>
               </div>
             </div>
           </div>
