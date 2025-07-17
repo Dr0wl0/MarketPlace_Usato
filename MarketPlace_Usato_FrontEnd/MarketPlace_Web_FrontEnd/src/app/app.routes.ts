@@ -7,6 +7,7 @@ import { authGuard } from './auth.guard';
 import { CambiaCredenzialiComponent } from './components/cambia-credenziali/cambia-credenziali.component';
 import { AnnunciPreferitiComponent } from './components/annunci-preferiti/annunci-preferiti.component';
 import { AnnunciPropriComponent } from './components/annunci-propri/annunci-propri.component';
+import { CarrelloComponent } from './components/carrello/carrello.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent,data: { hideNavbar: true }  },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: 'annunci', component: MostraListaComponent},
   { path: 'annunci-propi', component: AnnunciPropriComponent},
   { path: 'preferiti', component: AnnunciPreferitiComponent},
+  { path: 'carrello', component: CarrelloComponent},
  { 
     path: 'profilo', 
     component: ProfiloComponent,
