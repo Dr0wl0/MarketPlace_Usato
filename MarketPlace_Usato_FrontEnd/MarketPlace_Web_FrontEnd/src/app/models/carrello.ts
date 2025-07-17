@@ -1,8 +1,8 @@
-import { Annuncio } from "./annuncio";
+import { CartItem } from "./cartItem";
 
 export interface Carrello {
   uuid: string;
   userUuid: string;
-  annunci: Annuncio[];
+  item: CartItem[];
   tot: number;
 }

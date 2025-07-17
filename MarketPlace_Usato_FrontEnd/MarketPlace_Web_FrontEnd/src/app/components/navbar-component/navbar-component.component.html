@@ -11,6 +11,7 @@
         👤 Profilo: {{authService.currentUserName$ | async}}
       </button>
       <div class="dropdown-content">
+        <a routerLink="/carrello">Carrello</a>
         <a routerLink="/profilo">Il mio profilo</a>
         <a (click)="authService.logout()">Logout</a>
       </div>

@@ -3,10 +3,12 @@ import { CartService } from '../../services/cart.service';
 import { Carrello } from '../../models/carrello';
 import { Annuncio } from '../../models/annuncio';
 import { CommonModule } from '@angular/common';
+import { CartItem } from '../../models/cartItem';
 
 @Component({
+  standalone: true,
   selector: 'app-carrello',
-  imports: [ CommonModule ],
+  imports: [CommonModule],
   templateUrl: './carrello.component.html',
   styleUrls: ['./carrello.component.css']
 })
@@ -24,11 +26,9 @@ export class CarrelloComponent implements OnInit {
     }
   }
 
-  removeCarrello(annuncio: Annuncio): void {
-    this.cartService.removeCarrello(this.carrello!.uuid, annuncio).subscribe(() => {
-      this.cartService.getCarrello(this.carrello!.userUuid).subscribe(updated => {
-        this.carrello = updated;
-      });
+  removeCarrello(annuncio: CartItem): void {
+    this.cartService.removeFromCarrello(this.carrello!.uuid, annuncio).subscribe(updatedCarrello => {
+      this.carrello = updatedCarrello;
     });
   }
 }

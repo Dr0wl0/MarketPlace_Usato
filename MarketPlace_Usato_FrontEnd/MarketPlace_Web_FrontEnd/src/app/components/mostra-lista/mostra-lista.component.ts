@@ -56,17 +56,6 @@ export class MostraListaComponent implements OnInit{
     return;
   }
   */
-  const userUuid = localStorage.getItem('userUuid');
-  if (userUuid) {
-    this.cartService.getCarrello(userUuid).subscribe(carrello => {
-      console.log('Carrello caricato:', carrello);
-    }, err => {
-      console.warn('Carrello non trovato – lo creo');
-      this.cartService.createCarrello(userUuid).subscribe(newCarrello => {
-        console.log('Carrello creato:', newCarrello);
-      });
-    });
-  }
   this.loadAnnuncio();
   this.loadCategorie();
 }
@@ -167,7 +156,7 @@ applyFilters(): void {
   }
 
   addCarrello(annuncio: Annuncio): void {
-    
+    this.cartService.getCarrello(annuncio.uuid);
   }
 
   filtraPerNome(): void {

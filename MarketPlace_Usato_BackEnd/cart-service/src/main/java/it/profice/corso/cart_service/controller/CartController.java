@@ -22,7 +22,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping
-    public CartDTO createCart(@RequestParam String userUuid){
+    public CartDTO createCart(@RequestBody String userUuid){
         return cartService.createCart(userUuid);
     }
 
