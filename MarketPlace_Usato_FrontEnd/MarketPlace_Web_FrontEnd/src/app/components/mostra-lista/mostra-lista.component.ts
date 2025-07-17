@@ -7,9 +7,11 @@ import { HttpClient } from '@angular/common/http';
 import { Category } from '../../models/categoria';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-post-list',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './mostra-lista.component.html',
   styleUrl: './mostra-lista.component.css'
 })

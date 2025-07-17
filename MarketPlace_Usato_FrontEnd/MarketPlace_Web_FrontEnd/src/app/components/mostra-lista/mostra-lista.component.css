@@ -399,3 +399,34 @@ select {
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(67, 56, 202, 0.55);
 }
+
+.btn-dettagli {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+.btn-dettagli:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.annuncio-footer {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.card-footer {
+  background-color: transparent;
+  border-top: none;
+  padding-top: 0;
+}
