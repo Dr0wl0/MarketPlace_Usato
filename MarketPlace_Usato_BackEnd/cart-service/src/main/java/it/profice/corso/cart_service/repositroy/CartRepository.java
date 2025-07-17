@@ -1,16 +1,18 @@
 package it.profice.corso.cart_service.repositroy;
 
-import it.profice.corso.cart_service.model.Cart;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import it.profice.corso.cart_service.model.Cart;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
-    Optional<Cart> findByUuid( String uuid );
+    Optional<Cart> findByUserUuid( String userUuid );
+    Optional<Cart> findByUuid( String uuid);
 
     @Query(value = "SELECT c.user_uuid FROM Cart c WHERE c.user_uuid = :userUuid", nativeQuery = true)
     String findUserUuid(String userUuid);

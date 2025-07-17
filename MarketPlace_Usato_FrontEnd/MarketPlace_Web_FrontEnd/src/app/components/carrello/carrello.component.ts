@@ -1,32 +1,34 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
+import { Carrello } from '../../models/carrello';
 import { Annuncio } from '../../models/annuncio';
-import { CartItem } from '../../models/cartItem';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-carrello',
-  imports: [],
+  imports: [ CommonModule ],
   templateUrl: './carrello.component.html',
-  styleUrl: './carrello.component.css'
+  styleUrls: ['./carrello.component.css']
 })
-export class CarrelloComponent {
+export class CarrelloComponent implements OnInit {
+  carrello!: Carrello | null;
 
-  private router: Router = new Router;
-  private cartService!: CartService;
-  private carrello: CartItem[] = [];
-  private userUuid = localStorage.getItem('userUuid');
+  constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-
-    if (!this.userUuid) {
-      this.router.navigate(['/login']);
-      return;
+    const userUuid = localStorage.getItem('userUuid');
+    if (userUuid) {
+      this.cartService.getCarrello(userUuid).subscribe((carrello: Carrello) => {
+        this.carrello = carrello;
+      });
     }
-    this.loadCarrello(this.userUuid);
-  } 
+  }
 
-  private loadCarrello(uudi: string){
-    this.cartService.getCarrello(uudi)
-  };
+  removeCarrello(annuncio: Annuncio): void {
+    this.cartService.removeCarrello(this.carrello!.uuid, annuncio).subscribe(() => {
+      this.cartService.getCarrello(this.carrello!.userUuid).subscribe(updated => {
+        this.carrello = updated;
+      });
+    });
+  }
 }

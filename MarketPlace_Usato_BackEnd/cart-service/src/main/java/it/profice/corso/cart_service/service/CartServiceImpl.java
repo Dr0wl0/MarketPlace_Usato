@@ -1,5 +1,9 @@
 package it.profice.corso.cart_service.service;
 
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+
 import it.profice.corso.cart_service.DTO.CartDTO;
 import it.profice.corso.cart_service.DTO.CartItemDTO;
 import it.profice.corso.cart_service.exception.CartAlreadyCreated;
@@ -9,9 +13,6 @@ import it.profice.corso.cart_service.model.CartItem;
 import it.profice.corso.cart_service.repositroy.CartRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +34,11 @@ public class CartServiceImpl implements CartService{
             throw new CartAlreadyCreated();
         }
 
+    }
+
+    @Override
+    public CartDTO findCartByUserUuid(String userUuid) {
+        return modelToDto(cartRepository.findByUserUuid(userUuid).orElseThrow(CartNotFound::new));
     }
 
     @Override
@@ -102,4 +108,6 @@ public class CartServiceImpl implements CartService{
                 .cart(cart)
                 .build();
     }
+
+    
 }
