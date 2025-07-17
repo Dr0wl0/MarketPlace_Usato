@@ -170,8 +170,19 @@ applyFilters(): void {
   }
 
   addCarrello(annuncio: Annuncio): void {
-    
+  const userUuid = localStorage.getItem('userUuid');
+  if (!userUuid) {
+    this.router.navigate(['/login']);
+    return;
   }
+  this.cartService.addCarrello(userUuid, annuncio).subscribe({
+    next: () => {
+      alert('Oggetto aggiunto al carrello!');
+      // oppure aggiorna localmente (es. numero nel badge)
+    },
+    error: () => alert('Errore aggiungendo al carrello.')
+  });
+}
 
   filtraPerNome(): void {
      if (!this.searchTerm || this.searchTerm.trim() === '') {
