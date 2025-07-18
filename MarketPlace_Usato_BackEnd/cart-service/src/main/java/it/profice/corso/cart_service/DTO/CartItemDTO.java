@@ -14,5 +14,7 @@ public class CartItemDTO {
     private String uuid;
     private String listingUuid;
     private Integer quantity;
+    private String listingName;
+    private Double price;
 
 }

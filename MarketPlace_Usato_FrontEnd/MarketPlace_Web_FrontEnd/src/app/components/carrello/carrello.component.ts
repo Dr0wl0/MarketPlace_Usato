@@ -31,4 +31,13 @@ export class CarrelloComponent implements OnInit {
       this.carrello = updatedCarrello;
     });
   }
+
+  get totalPrice(): number {
+  if (!this.carrello?.items?.length) {
+    return 0;
+  }
+  return this.carrello.items
+    .reduce((sum, item) => sum + (item.price * item.quantity), 0);
+}
+  
 }

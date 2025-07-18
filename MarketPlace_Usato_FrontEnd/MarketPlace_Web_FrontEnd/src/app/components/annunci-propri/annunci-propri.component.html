@@ -1,1 +1,31 @@
-<p>annunci-propri works!</p>
+<div class="annunci-container">
+<header class="annunci-header">
+    <h1 class="annunci-title">
+      <span class="logo-icon">🛍️</span> ThriftGo!
+    </h1>
+</header>
+
+
+<main class="annunci-main-content">
+<section class="annunci-list-section">
+    <h2 class="section-title">
+        <i class="fas fa-tag"></i> Annunci Preferiti ⭐
+      </h2>
+      <div class="annuncio-footer">
+    <div *ngIf="annunci.length > 0; " class="annunci-grid">
+      <div *ngFor="let annuncio of annunci" class="annuncio-card">
+        <h3>{{annuncio.listingName}}</h3>
+        <p>{{annuncio.description}}</p>
+        <span class="price">€{{annuncio.price}}</span>
+      </div>
+    </div>
+    </div>
+  </section>
+</main>
+</div>
+
+
+    <ng-template #noFavorites>
+      <p>Non hai ancora annunci preferiti</p>
+    </ng-template>
+    

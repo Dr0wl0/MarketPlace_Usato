@@ -81,6 +81,8 @@ public class CartServiceImpl implements CartService{
                 .uuid(item.getUuid())
                 .listingUuid(item.getListingUuid())
                 .quantity(item.getQuantity())
+                .listingName(item.getListingName())
+                .price(item.getPrice())
                 .build())
             .toList();
 
@@ -99,6 +101,8 @@ public class CartServiceImpl implements CartService{
                 .uuid(itemDto.getUuid())
                 .listingUuid(itemDto.getListingUuid())
                 .quantity(itemDto.getQuantity())
+                .listingName(itemDto.getListingName())
+                .price(itemDto.getPrice())
                 .build())
             .toList();
 
@@ -116,7 +120,9 @@ public class CartServiceImpl implements CartService{
                 .listingUuid(item.getListingUuid())
                 .quantity(item.getQuantity())
                 .uuid(item.getUuid())
-                .build();
+                .listingName(item.getListingName())
+                .price(item.getPrice())
+            .build();
     }
 
     public CartItem itemDtoToModel (CartItemDTO itemDto, Cart cart){
@@ -125,6 +131,8 @@ public class CartServiceImpl implements CartService{
                 .quantity(itemDto.getQuantity())
                 .uuid(itemDto.getUuid())
                 .cart(cart)
+                .listingName(itemDto.getListingName())
+                .price(itemDto.getPrice())
                 .build();
     }
 

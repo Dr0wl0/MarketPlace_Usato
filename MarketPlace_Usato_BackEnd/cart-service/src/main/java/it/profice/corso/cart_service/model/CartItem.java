@@ -18,6 +18,8 @@ public class CartItem {
     private String uuid;
     private String listingUuid;
     private Integer quantity;
+    private String listingName;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")

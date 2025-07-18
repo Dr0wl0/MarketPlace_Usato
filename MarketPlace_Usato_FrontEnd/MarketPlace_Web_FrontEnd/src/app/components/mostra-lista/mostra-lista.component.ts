@@ -169,14 +169,9 @@ addCarrello(annuncio: Annuncio): void {
       const cartItem: CartItem = {
         listingUuid: annuncio.uuid,
         quantity: 1,
-
         uuid: '',
-        userUuid: '',
-        listingName: '',
-        description: '',
-        categoryName: '',
-        price: 0,
-        favourite: false
+        listingName: annuncio.listingName,
+        price: annuncio.price
       };
       
       this.cartService.addToCarrello(carrello.uuid, cartItem).subscribe({

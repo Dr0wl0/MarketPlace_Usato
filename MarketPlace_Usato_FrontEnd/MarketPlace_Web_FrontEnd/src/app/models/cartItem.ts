@@ -1,8 +1,8 @@
-import { Annuncio } from "./annuncio";
 
-
-export interface CartItem extends Annuncio{
+export interface CartItem{
     uuid: string,
     listingUuid: string,
-    quantity: number
+    quantity: number,
+    listingName: string,
+    price: number
 }
