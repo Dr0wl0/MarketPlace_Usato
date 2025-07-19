@@ -55,7 +55,6 @@ export class LoginComponent {
       this.cartService.getCarrello(localStorage.getItem('userUuid')!).subscribe({
         next: (carrello) => {
           console.log('Carrello caricato:', carrello);
-          this.router.navigate(['/login']);
         },
         error: () => {
           console.warn('Carrello non trovato – lo creo');

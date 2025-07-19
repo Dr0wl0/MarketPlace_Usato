@@ -4,14 +4,14 @@
   <div class="carrello-item" *ngFor="let cartItem of carrello!.items">
     <div class="item-info">
       <h2>{{ cartItem.listingName }}</h2>
-      <h4>{{ cartItem.price }}</h4>
+      <h4>{{ cartItem.price }} €</h4>
       <p>Quantità: {{ cartItem.quantity }}</p>
     </div>
     <button class="remove-btn" (click)="removeCarrello(cartItem)">Rimuovi</button>
   </div>
 
   <div class="carrello-footer" >
-    <strong>Totale: €{{ totalPrice }}</strong>
+    <strong>Totale: €{{ totalPrice }} €</strong>
   </div>
 </div>
 
