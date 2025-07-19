@@ -66,9 +66,12 @@ export class LoginComponent {
               console.error('Errore nella creazione del carrello');
               this.router.navigate(['/login']);
             }
-          });  // <-- chiusura createCarrello.subscribe
+          });
         }
-      });  // <-- CHIUSURA mancante per getCarrello.subscribe
+      });
+
+      window.location.href = '/annunci';
+
     },
     error: (error) => {
       console.error('Login error:', error);
