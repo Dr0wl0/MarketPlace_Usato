@@ -50,7 +50,6 @@ export class LoginComponent {
       localStorage.setItem('userUuid', response.uuid);
       localStorage.setItem('userName', response.username || username);
       localStorage.setItem('userEmail', email);
-      this.router.navigate(['/annunci']);
 
       this.cartService.getCarrello(localStorage.getItem('userUuid')!).subscribe({
         next: (carrello) => {
