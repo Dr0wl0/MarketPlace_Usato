@@ -2,31 +2,58 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
+
 export class RegisterComponent {
-  username = '';
-  email = '';
-  password = '';
+  registrationForm;
   errorMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router,  
+    private fb: FormBuilder,
+  ) {
+
+    this.registrationForm = this.fb.group(
+      {
+        username: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]]
+      }
+    )
+    
+    }
+
+    
 
   onSubmit() {
-    this.authService.register(this.username, this.email, this.password).subscribe({
+    if (this.registrationForm.invalid) {
+      return;
+    }
+
+    const { username, email, password } = this.registrationForm.value;
+
+    if (!username || !email || !password) {
+      this.errorMessage = 'Per favore compila tutti i campi';
+      return;
+    }
+
+    this.authService.register(username, email, password).subscribe({
       next: () => {
-        this.router.navigate(['/login']); // Reindirizza al login dopo la registrazione
+        this.router.navigate(['/login']);
       },
       error: () => {
-        this.errorMessage = 'Registrazione fallita!'; // TODO  - PRENDERE INFORMAZIONI DALLA RESPONSE
+        this.errorMessage = 'Registrazione fallita!';
       }
     });
   }

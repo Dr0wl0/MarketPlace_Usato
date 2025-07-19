@@ -3,23 +3,32 @@
 <div class="register-box">
   <h2>Registrati</h2>
   
-  <form (ngSubmit)="onSubmit()" #form="ngForm">
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div>
       <label>Username:</label>
-      <input type="text" name="username" [(ngModel)]="username" required />
+      <input type="text" formControlName="username" />
+      <div class="error" *ngIf="registrationForm.get('username')?.invalid && registrationForm.get('username')?.touched">
+        Username richiesto
+      </div>
     </div>
 
     <div>
       <label>Email:</label>
-      <input type="email" name="email" [(ngModel)]="email" required />
+      <input type="email" formControlName="email" />
+      <div class="error" *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+        Email non valida
+      </div>
     </div>
 
     <div>
       <label>Password:</label>
-      <input type="password" name="password" [(ngModel)]="password" required />
+      <input type="password" formControlName="password" />
+      <div class="error" *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">
+        Minimo 6 caratteri
+      </div>
     </div>
 
-    <button type="submit">Registrati</button>
+    <button type="submit" [disabled]="registrationForm.invalid">Registrati</button>
   </form>
 
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
